@@ -97,6 +97,12 @@ def register():
     return render_template("register.html")
 
 
+@app.route('/messenger')
+@login_required
+def messenger():
+    return render_template("messenger.html")
+
+
 @app.route('/about')
 def about():
     return render_template("about.html")

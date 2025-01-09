@@ -1,0 +1,51 @@
+body {
+
+}
+
+#navmenu {
+    margin: 10px;
+    padding: 1rem;
+    position: fixed;
+    list-style-type: none;
+    border: 2px solid #FFFAFA;
+    border-radius: 10px 10px;
+    width: 250px;
+    height: 100%
+    min-height: 200px;
+    background-color: #FFFAFA;
+}
+
+#navmenu ul {
+    display: none;
+    position: absolute;
+    top: 100%;
+    margin: 20px;
+    padding: 20px;
+    background-color: #FFFAFA;
+    border-radius: 5px 5px;
+}
+
+#navmenu li {
+    display: inline;
+    float: left;
+    position: relative;
+    text-align: left;
+    padding: 10px;
+    width: 100%;
+}
+
+#navmenu a:hover {
+    border-radius: 10px 10px;
+    background-color: #DAA520;
+}
+
+.bottom_row {
+    position:absolute;
+    bottom:0;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+}
