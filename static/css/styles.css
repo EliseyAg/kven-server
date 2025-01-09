@@ -9,7 +9,7 @@ body {
     list-style-type: none;
     border: 2px solid #FFFAFA;
     border-radius: 10px 10px;
-    width: 250px;
+    width: 200px;
     height: 100%
     min-height: 200px;
     background-color: #FFFAFA;
@@ -49,3 +49,13 @@ body {
     margin-right: -15px;
     margin-left: -15px;
 }
+
+.flex-container {
+    margin-right: 10%;
+    margin-left: 10%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 75%;
+}
+

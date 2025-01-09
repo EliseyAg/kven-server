@@ -119,8 +119,7 @@ def logout():
 @app.route('/profile')
 @login_required
 def profile():
-    return f"""<p><a href="/logout">Выйти из профиля</a>
-               <p>user info: {current_user.get_id()}"""
+    return render_template("profile.html")
 
 
 @app.route('/user/<string:name>/<int:id>')
