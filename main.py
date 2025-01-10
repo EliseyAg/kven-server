@@ -9,7 +9,7 @@ from FDataBase import FDataBase
 from UserLogin import UserLogin
 
 
-DATABASE = '/tmp/users.bd'
+#DATABASE = '/tmp/users.bd'
 DEBUG = True
 SECRET_KEY = 'jgfjlfkj765@68976,<34'
 
@@ -17,6 +17,7 @@ SECRET_KEY = 'jgfjlfkj765@68976,<34'
 app = Flask(__name__)
 app.config.from_object(__name__)
 app.config.update(dict(DATABASE=os.path.join(app.root_path, 'users.db')))
+app.config.update(dict(DATABASE=os.path.join(app.root_path, 'chats.db')))
 
 login_manager = LoginManager(app)
 
@@ -27,34 +28,37 @@ def load_user(user_id):
     return UserLogin().fromDB(user_id, dbase)
 
 
-def connect_db():
-    conn = sqlite3.connect(app.config['DATABASE'])
+def connect_db(DATABASE):
+    conn = sqlite3.connect(app.config[DATABASE])
     conn.row_factory = sqlite3.Row
     return conn
 
 
 def create_db():
     db = connect_db()
-    with app.open_resource('sq_db.sql', mode='r') as f:
+    with app.open_resource("chats_db.sql", mode='r') as f:
         db.cursor().executescript(f.read())
     db.commit()
     db.close()
 
 
-def get_db():
+def get_db(DATABASE):
     if not hasattr(g, 'link_db'):
-        g.link_db = connect_db()
+        g.link_db = connect_db('DATABASE')
     return g.link_db
 
 
 dbase = None
+dbase_chats = None
 
 
 @app.before_request
 def before_request():
     global dbase
-    db = get_db()
+    db = get_db('/tmp/users.bd')
     dbase = FDataBase(db)
+    db = get_db('/tmp/chats.bd')
+    dbase_chats = FDataBase(db)
 
 
 @app.teardown_appcontext
