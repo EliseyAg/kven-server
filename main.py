@@ -55,10 +55,9 @@ dbase_chats = None
 @app.before_request
 def before_request():
     global dbase
+    global dbase_chats
     db = get_db('/tmp/users.bd')
     dbase = FDataBase(db)
-    db = get_db('/tmp/chats.bd')
-    dbase_chats = FDataBase(db)
 
 
 @app.teardown_appcontext
@@ -105,6 +104,14 @@ def register():
 @login_required
 def messenger():
     return render_template("messenger.html")
+
+
+@app.route('/personlist', methods=['POST', "GET"])
+def personlist():
+    if request.method == "POST":
+        pass
+
+    return render_template("personlist.html")
 
 
 @app.route('/about')
