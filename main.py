@@ -6,10 +6,11 @@ import sqlite3
 import os
 
 from FDataBase import FDataBase
+from ChatsDataBase import ChatsDataBase
 from UserLogin import UserLogin
 
 
-#DATABASE = '/tmp/users.bd'
+DATABASE = '/tmp/users.bd'
 DEBUG = True
 SECRET_KEY = 'jgfjlfkj765@68976,<34'
 
@@ -28,8 +29,8 @@ def load_user(user_id):
     return UserLogin().fromDB(user_id, dbase)
 
 
-def connect_db(DATABASE):
-    conn = sqlite3.connect(app.config[DATABASE])
+def connect_db():
+    conn = sqlite3.connect(app.config['DATABASE'])
     conn.row_factory = sqlite3.Row
     return conn
 
@@ -42,22 +43,25 @@ def create_db():
     db.close()
 
 
-def get_db(DATABASE):
+def get_db():
     if not hasattr(g, 'link_db'):
-        g.link_db = connect_db('DATABASE')
+        g.link_db = connect_db()
     return g.link_db
 
 
 dbase = None
-dbase_chats = None
+chats_dbase = None
+curr_user = None
 
 
 @app.before_request
 def before_request():
     global dbase
-    global dbase_chats
-    db = get_db('/tmp/users.bd')
+    global chats_dbase
+    db = get_db()
     dbase = FDataBase(db)
+    db = get_db()
+    chats_dbase = ChatsDataBase(db)
 
 
 @app.teardown_appcontext
@@ -74,10 +78,11 @@ def index():
 @app.route('/login', methods=['POST', "GET"])
 def login():
     if request.method == "POST":
+        global curr_user
         user = dbase.getUserByName(request.form['username'])
         if user and check_password_hash(user['psw'], request.form['password']):
-            userlogin = UserLogin().create(user)
-            login_user(userlogin)
+            curr_user = UserLogin().create(user)
+            login_user(curr_user)
             return redirect("/profile")
 
     return render_template("login.html")
@@ -107,9 +112,12 @@ def messenger():
 
 
 @app.route('/personlist', methods=['POST', "GET"])
+@login_required
 def personlist():
     if request.method == "POST":
-        pass
+        if curr_user:
+            chats_dbase.addChat("", curr_user.get_id(), dbase.getUserById(request.form['id']))
+        return redirect("/messenger")
 
     return render_template("personlist.html")
 
