@@ -10,7 +10,7 @@ from ChatsDataBase import ChatsDataBase
 from UserLogin import UserLogin
 
 
-DATABASE = '/tmp/users.bd'
+#DATABASE = '/tmp/users.bd'
 DEBUG = True
 SECRET_KEY = 'jgfjlfkj765@68976,<34'
 
@@ -26,6 +26,7 @@ login_manager = LoginManager(app)
 @login_manager.user_loader
 def load_user(user_id):
     print("load user")
+    app.config.update(dict(DATABASE=os.path.join(app.root_path, 'users.db')))
     return UserLogin().fromDB(user_id, dbase)
 
 
@@ -58,8 +59,10 @@ curr_user = None
 def before_request():
     global dbase
     global chats_dbase
+    app.config.update(dict(DATABASE=os.path.join(app.root_path, 'users.db')))
     db = get_db()
     dbase = FDataBase(db)
+    app.config.update(dict(DATABASE=os.path.join(app.root_path, 'chats.db')))
     db = get_db()
     chats_dbase = ChatsDataBase(db)
 
@@ -79,10 +82,12 @@ def index():
 def login():
     if request.method == "POST":
         global curr_user
+        app.config.update(dict(DATABASE=os.path.join(app.root_path, 'users.db')))
         user = dbase.getUserByName(request.form['username'])
         if user and check_password_hash(user['psw'], request.form['password']):
             curr_user = UserLogin().create(user)
             login_user(curr_user)
+            print(curr_user)
             return redirect("/profile")
 
     return render_template("login.html")
@@ -93,6 +98,7 @@ def register():
     if request.method == "POST":
         if len(request.form['username']) > 4 and request.form['password'] == request.form['password2']:
             hash = generate_password_hash(request.form['password'])
+            app.config.update(dict(DATABASE=os.path.join(app.root_path, 'users.db')))
             res = dbase.addUser(request.form['username'], hash)
             if res:
                 flash("Вы успешно зарегистрированы", "success")
@@ -116,7 +122,12 @@ def messenger():
 def personlist():
     if request.method == "POST":
         if curr_user:
-            chats_dbase.addChat("", curr_user.get_id(), dbase.getUserById(request.form['id']))
+            app.config.update(dict(DATABASE=os.path.join(app.root_path, 'users.db')))
+            user_1_id = UserLogin().create(dbase.getUserById(request.form['id'])).get_id()
+            curr_user_id = curr_user.get_id()
+            app.config.update(dict(DATABASE=os.path.join(app.root_path, 'chats.db')))
+            print(user_1_id)
+            chats_dbase.addChat("", curr_user_id, user_1_id)
         return redirect("/messenger")
 
     return render_template("personlist.html")
