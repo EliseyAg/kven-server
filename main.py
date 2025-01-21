@@ -7,6 +7,7 @@ import os
 
 from FDataBase import FDataBase
 from UserLogin import UserLogin
+from Chat import Chat
 
 
 DATABASE = '/tmp/dbase.bd'
@@ -79,7 +80,6 @@ def login():
         if user and check_password_hash(user['psw'], request.form['password']):
             curr_user = UserLogin().create(user)
             login_user(curr_user)
-            print(curr_user)
             return redirect("/profile")
 
     return render_template("login.html")
@@ -115,12 +115,20 @@ def personlist():
         if curr_user:
             user_1_id = UserLogin().create(dbase.getUserById(request.form['id'])).get_id()
             curr_user_id = curr_user.get_id()
-            print(user_1_id)
             dbase.addChat("", curr_user_id, user_1_id)
-            print("YES")
         return redirect("/messenger")
 
     return render_template("personlist.html")
+
+
+@app.route('/chat/<int:id>')
+def chat(id):
+    print(id)
+    chat = Chat().create(dbase.getChatById(id))
+    if not(chat.get_users_id().split()[0] == curr_user.get_id() or chat.get_users_id().split()[1] == curr_user.get_id()):
+        return redirect("/messenger")
+
+    return render_template("about.html")
 
 
 @app.route('/about')

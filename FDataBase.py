@@ -57,12 +57,26 @@ class FDataBase:
 
         return True
 
+    def getChatById(self, chat_id):
+        try:
+            self.__cur.execute(f"SELECT * FROM chats WHERE id = '{chat_id}' LIMIT 1")
+            res = self.__cur.fetchone()
+            if not res:
+                print("Чат не найден")
+                return False
+
+            return res
+        except sqlite3.Error as e:
+            print("Ошибка получения данных из БД " + str(e))
+
+        return False
+
     def getChatByName(self, chat_name):
         try:
             self.__cur.execute(f"SELECT * FROM chats WHERE name = '{chat_name}' LIMIT 1")
             res = self.__cur.fetchone()
             if not res:
-                print("Пользователь не найден")
+                print("Чат не найден")
                 return False
 
             return res
