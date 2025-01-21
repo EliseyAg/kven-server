@@ -4,3 +4,10 @@ CREATE TABLE IF NOT EXISTS users (
     psw text NOT NULL,
     time integer NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS chats (
+    id integer PRIMARY KEY AUTOINCREMENT,
+    name text NOT NULL,
+    user_id0 text NOT NULL,
+    user_id1 text NOT NULL
+);

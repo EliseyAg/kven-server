@@ -10,15 +10,14 @@ from ChatsDataBase import ChatsDataBase
 from UserLogin import UserLogin
 
 
-#DATABASE = '/tmp/users.bd'
+DATABASE = '/tmp/dbase.bd'
 DEBUG = True
 SECRET_KEY = 'jgfjlfkj765@68976,<34'
 
 
 app = Flask(__name__)
 app.config.from_object(__name__)
-app.config.update(dict(DATABASE=os.path.join(app.root_path, 'users.db')))
-app.config.update(dict(DATABASE=os.path.join(app.root_path, 'chats.db')))
+app.config.update(dict(DATABASE=os.path.join(app.root_path, 'dbase.db')))
 
 login_manager = LoginManager(app)
 
@@ -26,7 +25,7 @@ login_manager = LoginManager(app)
 @login_manager.user_loader
 def load_user(user_id):
     print("load user")
-    app.config.update(dict(DATABASE=os.path.join(app.root_path, 'users.db')))
+    app.config.update(dict(DATABASE=os.path.join(app.root_path, 'dbase.db')))
     return UserLogin().fromDB(user_id, dbase)
 
 
@@ -38,7 +37,7 @@ def connect_db():
 
 def create_db():
     db = connect_db()
-    with app.open_resource("chats_db.sql", mode='r') as f:
+    with app.open_resource("sq_db.sql", mode='r') as f:
         db.cursor().executescript(f.read())
     db.commit()
     db.close()
@@ -51,20 +50,14 @@ def get_db():
 
 
 dbase = None
-chats_dbase = None
 curr_user = None
 
 
 @app.before_request
 def before_request():
     global dbase
-    global chats_dbase
-    app.config.update(dict(DATABASE=os.path.join(app.root_path, 'users.db')))
     db = get_db()
     dbase = FDataBase(db)
-    app.config.update(dict(DATABASE=os.path.join(app.root_path, 'chats.db')))
-    db = get_db()
-    chats_dbase = ChatsDataBase(db)
 
 
 @app.teardown_appcontext
@@ -98,7 +91,6 @@ def register():
     if request.method == "POST":
         if len(request.form['username']) > 4 and request.form['password'] == request.form['password2']:
             hash = generate_password_hash(request.form['password'])
-            app.config.update(dict(DATABASE=os.path.join(app.root_path, 'users.db')))
             res = dbase.addUser(request.form['username'], hash)
             if res:
                 flash("Вы успешно зарегистрированы", "success")
@@ -122,12 +114,11 @@ def messenger():
 def personlist():
     if request.method == "POST":
         if curr_user:
-            app.config.update(dict(DATABASE=os.path.join(app.root_path, 'users.db')))
             user_1_id = UserLogin().create(dbase.getUserById(request.form['id'])).get_id()
             curr_user_id = curr_user.get_id()
-            app.config.update(dict(DATABASE=os.path.join(app.root_path, 'chats.db')))
             print(user_1_id)
-            chats_dbase.addChat("", curr_user_id, user_1_id)
+            dbase.addChat("", curr_user_id, user_1_id)
+            print("YES")
         return redirect("/messenger")
 
     return render_template("personlist.html")
