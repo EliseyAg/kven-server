@@ -121,11 +121,20 @@ def personlist():
     return render_template("personlist.html")
 
 
-@app.route('/chat/<int:id>') 
+@app.route('/chat/<int:id>')
+@login_required
 def chat(id):
     print(id)
     chat = Chat().create(dbase.getChatById(id))
-    if not(chat.get_users_id().split()[0] == curr_user.get_id() or chat.get_users_id().split()[1] == curr_user.get_id()):
+    user0_id = chat.get_users_id().split()[0]
+    user1_id = chat.get_users_id().split()[1]
+
+    if curr_user.get_id() == user0_id:
+        opponent_id = user1_id
+    else:
+        opponent_id = user0_id
+
+    if not(user0_id == curr_user.get_id() or user1_id == curr_user.get_id()):
         return redirect("/messenger")
 
     return render_template("about.html")
