@@ -84,3 +84,28 @@ class FDataBase:
             print("Ошибка получения данных из БД " + str(e))
 
         return False
+
+    def addMessage(self, chat_id, text):
+        try:
+            tm = math.floor(time.time())
+            self.__cur.execute("INSERT INTO messages VALUES(NULL, ?, ?, ?)", (chat_id, text, tm))
+            self.__db.commit()
+        except sqlite3.Error as e:
+            print("Ошибка добавления в БД: " + str(e))
+            return False
+
+        return True
+
+    def getMessageByChatId(self, chat_id):
+        try:
+            self.__cur.execute(f"SELECT * FROM messages WHERE chat_id = '{chat_id}' LIMIT 1")
+            res = self.__cur.fetchone()
+            if not res:
+                print("Чат не найден")
+                return False
+
+            return res
+        except sqlite3.Error as e:
+            print("Ошибка получения данных из БД " + str(e))
+
+        return False

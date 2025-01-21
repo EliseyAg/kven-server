@@ -121,7 +121,7 @@ def personlist():
     return render_template("personlist.html")
 
 
-@app.route('/chat/<int:id>')
+@app.route('/chat/<int:id>') 
 def chat(id):
     print(id)
     chat = Chat().create(dbase.getChatById(id))
