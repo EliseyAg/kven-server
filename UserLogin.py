@@ -18,3 +18,6 @@ class UserLogin():
 
     def get_id(self):
         return str(self.__user['id'])
+
+    def get_name(self):
+        return str(self.__user['name'])

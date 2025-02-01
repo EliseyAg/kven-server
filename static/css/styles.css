@@ -83,3 +83,7 @@ body {
     border-radius: 10px 10px;
     background-color: #DAA520;
 }
+
+.preformatted-text {
+  white-space: pre-wrap;
+}

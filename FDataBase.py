@@ -96,12 +96,16 @@ class FDataBase:
 
         return True
 
-    def getMessageByChatId(self, chat_id):
+    def getMessagesByChatId(self, chat_id):
         try:
-            self.__cur.execute(f"SELECT * FROM messages WHERE chat_id = '{chat_id}' LIMIT 1")
-            res = self.__cur.fetchone()
+            self.__cur.execute(f"SELECT * FROM messages WHERE chat_id = '{chat_id}'")
+            row = self.__cur.fetchone()
+            res = []
+            while row is not None:
+                res.append(row)
+                row = self.__cur.fetchone()
             if not res:
-                print("Чат не найден")
+                print("Сообщение не найдено")
                 return False
 
             return res

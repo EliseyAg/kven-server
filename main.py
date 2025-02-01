@@ -121,11 +121,17 @@ def personlist():
     return render_template("personlist.html")
 
 
-@app.route('/chat/<int:id>')
+@app.route('/chat/<int:id>', methods=['POST', "GET"])
 @login_required
 def chat(id):
-    print(id)
     chat = Chat().create(dbase.getChatById(id))
+
+    if request.method == "POST":
+        if curr_user:
+            message = request.form['message']
+            chat_id = chat.get_id()
+            dbase.addMessage(chat_id, message)
+
     user0_id = chat.get_users_id().split()[0]
     user1_id = chat.get_users_id().split()[1]
 
@@ -137,7 +143,20 @@ def chat(id):
     if not(user0_id == curr_user.get_id() or user1_id == curr_user.get_id()):
         return redirect("/messenger")
 
-    return render_template("about.html")
+    all = []
+    all.append(str(UserLogin().create(dbase.getUserById(opponent_id)).get_name()))
+    messages_all = dbase.getMessagesByChatId(chat.get_id())
+    messages = ""
+    for message in messages_all:
+        messages += '<br><span>' + message['text'] + '</span>'
+
+    if not(messages):
+        messages = ""
+
+    all.append(messages)
+    print(all)
+
+    return render_template("chat.html").format(*all)
 
 
 @app.route('/about')

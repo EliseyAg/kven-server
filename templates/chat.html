@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Чат с {0}
+{% endblock %}
+
+{% block body %}
+<div class="flex-container">
+    <div class="preformatted-text">
+        {1}
+    </div>
+</div>
+
+<div class="flex-container">
+    <form action="" method="post" class="form-contact">
+        <p><label>Сообщение: </label> <input type="text" name="message" value="" requered></p>
+        <p><input type="submit" value="Отправить"></p>
+        <hr aligh=left width="100%">
+    </form>
+</div>
+{% endblock %}
