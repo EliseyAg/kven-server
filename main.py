@@ -18,6 +18,7 @@ SECRET_KEY = 'jgfjlfkj765@68976,<34'
 app = Flask(__name__)
 app.config.from_object(__name__)
 app.config.update(dict(DATABASE=os.path.join(app.root_path, 'dbase.db')))
+#app.config['SERVER_NAME'] = "0.0.0.0"
 
 login_manager = LoginManager(app)
 
@@ -147,8 +148,9 @@ def chat(id):
     all.append(str(UserLogin().create(dbase.getUserById(opponent_id)).get_name()))
     messages_all = dbase.getMessagesByChatId(chat.get_id())
     messages = ""
-    for message in messages_all:
-        messages += '<br><span>' + message['text'] + '</span>'
+    if messages_all:
+        for message in messages_all:
+            messages += '<br><span>' + message['text'] + '</span>'
 
     if not(messages):
         messages = ""
@@ -173,7 +175,6 @@ def logout():
 
 
 @app.route('/profile')
-@login_required
 def profile():
     return render_template("profile.html")
 
@@ -184,4 +185,4 @@ def user(name, id):
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(host="192.168.1.165", port=5000)
