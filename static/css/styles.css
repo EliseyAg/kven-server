@@ -98,7 +98,7 @@ body {
 }
 
 #bottom-pos {
-    position: fixed;
+    position: absolute;
     flex-wrap: wrap;
     margin-right: 10%;
     margin-left: 10%;
