@@ -5,10 +5,12 @@
 {% endblock %}
 
 {% block body %}
-<form action="/register" method="POST" class="form-contact">
-  <p><label>Имя: </label> <input type="text" name="username" value="" requered></p>
-  <p><label>Пароль: </label> <input type="text" name="password" value="" requered></p>
-  <p><label>Еще раз пароль: </label> <input type="text" name="password2" value="" requered></p>
-  <p><input type="submit" value="Зарегистрироваться"></p>
-</form>
+<div class="container">
+  <form action="/register" method="POST" class="form-contact">
+    <p><label>Имя: </label> <input type="text" name="username" value="" requered></p>
+    <p><label>Пароль: </label> <input type="text" name="password" value="" requered></p>
+    <p><label>Еще раз пароль: </label> <input type="text" name="password2" value="" requered></p>
+    <p><input type="submit" value="Зарегистрироваться"></p>
+  </form>
+</div>
 {% endblock %}
