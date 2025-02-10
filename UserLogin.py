@@ -20,4 +20,4 @@ class UserLogin():
         return str(self.__user['id'])
 
     def get_name(self):
-        return str(self.__user['name'])
+        return str(self.__user['username'])

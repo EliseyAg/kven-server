@@ -26,7 +26,6 @@ login_manager = LoginManager(app)
 @login_manager.user_loader
 def load_user(user_id):
     print("load user")
-    app.config.update(dict(DATABASE=os.path.join(app.root_path, 'dbase.db')))
     return UserLogin().fromDB(user_id, dbase)
 
 
@@ -76,7 +75,6 @@ def index():
 def login():
     if request.method == "POST":
         global curr_user
-        app.config.update(dict(DATABASE=os.path.join(app.root_path, 'users.db')))
         user = dbase.getUserByName(request.form['username'])
         if user and check_password_hash(user['psw'], request.form['password']):
             curr_user = UserLogin().create(user)

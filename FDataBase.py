@@ -35,7 +35,7 @@ class FDataBase:
 
     def getUserByName(self, user_name):
         try:
-            self.__cur.execute(f"SELECT * FROM users WHERE name = '{user_name}' LIMIT 1")
+            self.__cur.execute(f"SELECT * FROM users WHERE username = '{user_name}' LIMIT 1")
             res = self.__cur.fetchone()
             if not res:
                 print("Пользователь не найден")
