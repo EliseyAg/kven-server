@@ -2,30 +2,33 @@ body {
 
 }
 
-#navmenu {
-    margin: 10px;
-    padding: 1rem;
-    position: fixed;
-    list-style-type: none;
-    border: 2px solid #FFFAFA;
+.navmenu__outer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+
+    bottom: 0;
+    height: 50px;
+    width: 50%;
+    background-color: #DCDCDC;
+    margin-right: 25%;
+    margin-left: 25%;
     border-radius: 10px 10px;
-    width: 200px;
-    height: 100%
-    min-height: 200px;
-    background-color: #FFFAFA;
 }
 
-#navmenu ul {
-    display: none;
-    position: absolute;
+.navmenu__inner {
+    display: flex;
     top: 100%;
+    width: 70%;
     margin: 20px;
     padding: 20px;
-    background-color: #FFFAFA;
-    border-radius: 5px 5px;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    /*border-radius: 5px 5px;*/
 }
 
-#navmenu li {
+.navmenu li {
     display: inline;
     float: left;
     position: relative;

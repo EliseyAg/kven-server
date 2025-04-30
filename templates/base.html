@@ -17,50 +17,18 @@
       </nav>
       <a class="btn btn-outline-primary" href="/login">Войти</a>
     </div>
-    <ul id="navmenu">
-      <li><a class="p-2 text-dark" href="/profile">Профиль</a></li>
-      <li><a class="p-2 text-dark" href="#">Новости</a></li>
-      <li><a class="p-2 text-dark" href="#">Видео</a></li>
-      <li><a class="p-2 text-dark" href="/messenger">Мессенджер</a></li>
-      <li><a class="p-2 text-dark" href="#">Сообщества</a></li>
-      <li><a class="p-2 text-dark" href="#">Друзья</a></li>
-    </ul>
     {% block body %}{% endblock %}
-    <div class="flex-container">
-      <div class="bottom_row">
-        <div class="col-12 col-md">
-          <small class="d-block mb-3 text-muted">© 2024-2025</small>
+    <div>
+        <div class="navmenu__outer">
+            <div class="navmenu__inner">
+                <a class="p-2 text-dark" href="/profile">Профиль</a>
+                <a class="p-2 text-dark" href="#">Новости</a>
+                <a class="p-2 text-dark" href="#">Видео</a>
+                <a class="p-2 text-dark" href="/messenger">Мессенджер</a>
+                <a class="p-2 text-dark" href="#">Сообщества</a>
+                <a class="p-2 text-dark" href="#">Друзья</a>
+            </div>
         </div>
-        <div class="col-6 col-md">
-          <h5>Features</h5>
-          <ul class="list-unstyled text-small">
-            <li><a class="text-muted" href="#">Cool stuff</a></li>
-            <li><a class="text-muted" href="#">Random feature</a></li>
-            <li><a class="text-muted" href="#">Team feature</a></li>
-            <li><a class="text-muted" href="#">Stuff for developers</a></li>
-            <li><a class="text-muted" href="#">Another one</a></li>
-            <li><a class="text-muted" href="#">Last time</a></li>
-          </ul>
-        </div>
-        <div class="col-6 col-md">
-          <h5>Resources</h5>
-          <ul class="list-unstyled text-small">
-            <li><a class="text-muted" href="#">Resource</a></li>
-            <li><a class="text-muted" href="#">Resource name</a></li>
-            <li><a class="text-muted" href="#">Another resource</a></li>
-            <li><a class="text-muted" href="#">Final resource</a></li>
-          </ul>
-        </div>
-        <div class="col-6 col-md">
-          <h5>About</h5>
-          <ul class="list-unstyled text-small">
-            <li><a class="text-muted" href="#">Team</a></li>
-            <li><a class="text-muted" href="#">Locations</a></li>
-            <li><a class="text-muted" href="#">Privacy</a></li>
-            <li><a class="text-muted" href="#">Terms</a></li>
-          </ul>
-        </div>
-      </div>
     </div>
 </body>
 </html>
