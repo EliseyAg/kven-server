@@ -9,7 +9,7 @@ body {
     position: absolute;
 
     bottom: 0;
-    height: 50px;
+    height: 80px;
     width: 50%;
     background-color: #DCDCDC;
     margin-right: 25%;
@@ -20,26 +20,19 @@ body {
 .navmenu__inner {
     display: flex;
     top: 100%;
-    width: 70%;
-    margin: 20px;
-    padding: 20px;
     flex-direction: row;
     flex-wrap: nowrap;
     /*border-radius: 5px 5px;*/
 }
 
-.navmenu li {
-    display: inline;
-    float: left;
-    position: relative;
-    text-align: left;
-    padding: 10px;
-    width: 100%;
-}
-
 #navmenu a:hover {
     border-radius: 10px 10px;
     background-color: #DAA520;
+}
+
+.messenger {
+    display: flex;
+    flex-direction: row;
 }
 
 .bottom_row {
