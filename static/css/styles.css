@@ -42,10 +42,41 @@ body {
     top: 100%;
     height: 100%;
     left: 0;
-    width: 50%
-    background-color: #DCDCDC;
+    width: 20%;
     flex-direction: column;
     align-items: center;
+}
+
+.chat_ref__outer {
+    display: flex;
+    height: 80px;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.chat_ref__inner {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    margin: 10px;
+    border-radius: 10px 10px;
+    align-items: center;
+    background-color: #DCDCDC;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+.chat_ref_avatar {
+    display: flex;
+    margin: 10px;
+}
+
+.chat_ref_name {
+    display: flex;
+    position: relative;
+    margin: 10px;
+    top: 0;
 }
 
 .bottom_row {
