@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'messenger.html' %}
 
 {% block meta %}
 <meta http-equiv="refresh" content="1">
@@ -8,8 +8,7 @@
 Чат с {0}
 {% endblock %}
 
-{% block body %}
-
+{% block chat %}
 <div class="chat">
     <div class="preformatted-text">
         <iframe id="FrameID" style="border: none;" srcdoc="{1}"></iframe>

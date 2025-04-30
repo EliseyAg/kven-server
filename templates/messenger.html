@@ -1,17 +1,26 @@
 {% extends 'base.html' %}
 
+{% block meta %}{% endblock %}
+
 {% block title %}
 Личные сообщения
 {% endblock %}
 
 {% block body %}
-<div>
+<link href="/static/css/styles.css" rel="stylesheet"/>
+<div class="messenger">
     <div class="chats_list">
+        <div>
+            Chat
+        </div>
 
+        <ul id="button_fdsdfad">
+            <li><a href="/personlist">Новый чат</a></li>
+        </ul>
     </div>
 
-    <ul id="button_fdsdfad">
-        <li><a href="/personlist">Новый чат</a></li>
-    </ul>
+    <div>
+        {% block chat %}{% endblock %}
+    </div>
 </div>
 {% endblock %}
