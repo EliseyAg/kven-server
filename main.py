@@ -81,7 +81,8 @@ def login():
         user = dbase.getUserByName(request.form['username'])
         if user and check_password_hash(user['psw'], request.form['password']):
             curr_user = UserLogin().create(user)
-            login_user(curr_user)
+            rm = True if request.form.get('remainme') else False
+            login_user(curr_user, remember=rm)
             return redirect("/profile")
 
     return render_template("login.html")
