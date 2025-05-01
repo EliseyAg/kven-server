@@ -15,6 +15,7 @@ DEBUG = True
 SECRET_KEY = 'jgfjlfkj765@68976,<34'
 
 CHAT_REF = '''<a class="chat_ref__outer" href="/chat/{0}"><div class="chat_ref__outer"><div class="chat_ref__inner"><div class="chat_ref_avatar"><img class="icon" src="/static/gallery/icons/profile.png"/></div><div class="chat_ref_name">{1}</div></div></div></a>'''
+RTL_MESSAGE = '''<div class="message_RTL"><div class="message__outer"><div class="message__avatar"></div><div class="message__inner"><div class="message__bubble__blue">Привет</div><div class="message__actions"></div><div class="message__spacer"></div></div><div class="message__status"></div></div>'''
 
 
 app = Flask(__name__)
@@ -222,4 +223,4 @@ def user(name, id):
 
 
 if __name__ == "__main__":
-    app.run(host="", port=5000)
+    app.run(host="0.0.0.0", port=5000)

@@ -204,6 +204,11 @@ body {
     width: 100%;
 }
 
+.message_LTL {
+    align-items: left;
+    width: 100%;
+}
+
 .message__outer {
     display: flex;
     margin: 10px;
@@ -224,7 +229,15 @@ body {
     flex: 1;
 }
 
-.message__bubble {
+.message__bubble__blue {
+    max-width: calc(100% - 67px);
+    overflow-wrap: break-word;
+    padding: 5px;
+    border-radius: 15px;
+    background-color: #DCDCDC;
+}
+
+.message__bubble__grey {
     max-width: calc(100% - 67px);
     overflow-wrap: break-word;
     padding: 5px;
