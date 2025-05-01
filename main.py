@@ -115,9 +115,9 @@ def messenger():
             _user1_id = _chat['user_id1']
 
             if curr_user.get_id() == _user0_id:
-                _opponent_id = _user0_id
-            else:
                 _opponent_id = _user1_id
+            else:
+                _opponent_id = _user0_id
 
             _opponent_user_name = str(UserLogin().create(dbase.getUserById(_opponent_id)).get_name())
             chat_refs += CHAT_REF.format(_chat['id'], _opponent_user_name)
@@ -170,9 +170,9 @@ def chat(id):
         _user1_id = _chat['user_id1']
 
         if curr_user.get_id() == _user0_id:
-            _opponent_id = _user0_id
-        else:
             _opponent_id = _user1_id
+        else:
+            _opponent_id = _user0_id
 
         _opponent_user_name = str(UserLogin().create(dbase.getUserById(_opponent_id)).get_name())
         chat_refs += CHAT_REF.format(_chat['id'], _opponent_user_name)
