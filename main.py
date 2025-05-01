@@ -14,6 +14,20 @@ DATABASE = '/tmp/dbase.bd'
 DEBUG = True
 SECRET_KEY = 'jgfjlfkj765@68976,<34'
 
+CHAT_REF = '''
+<a class="chat_ref__outer" href="/chat/1">
+    <div class="chat_ref__outer">
+        <div class="chat_ref__inner">
+            <div class="chat_ref_avatar">
+                <img class="icon" src="/static/gallery/icons/profile.png"/>
+            </div>
+            <div class="chat_ref_name">
+                {1}
+            </div>
+        </div>
+    </div>
+</a>'''
+
 
 app = Flask(__name__)
 app.config.from_object(__name__)
@@ -143,7 +157,11 @@ def chat(id):
         return redirect("/messenger")
 
     all = []
-    all.append(str(UserLogin().create(dbase.getUserById(opponent_id)).get_name()))
+
+    opponent_user_name = str(UserLogin().create(dbase.getUserById(opponent_id)).get_name())
+
+    all.append(CHAT_REF.format(id, opponent_user_name))
+    all.append(opponent_user_name)
     messages_all = dbase.getMessagesByChatId(chat.get_id())
     messages = ""
     if messages_all:
