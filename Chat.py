@@ -1,6 +1,6 @@
 class Chat():
     def fromDB(self, chat_id, db):
-        self.__chat = db.getUserById(chat_id)
+        self.__chat = db.getChatById(chat_id)
         return self
 
     def create(self, chat):

@@ -14,19 +14,7 @@ DATABASE = '/tmp/dbase.bd'
 DEBUG = True
 SECRET_KEY = 'jgfjlfkj765@68976,<34'
 
-CHAT_REF = '''
-<a class="chat_ref__outer" href="/chat/1">
-    <div class="chat_ref__outer">
-        <div class="chat_ref__inner">
-            <div class="chat_ref_avatar">
-                <img class="icon" src="/static/gallery/icons/profile.png"/>
-            </div>
-            <div class="chat_ref_name">
-                {1}
-            </div>
-        </div>
-    </div>
-</a>'''
+CHAT_REF = '''<a class="chat_ref__outer" href="/chat/{0}"><div class="chat_ref__outer"><div class="chat_ref__inner"><div class="chat_ref_avatar"><img class="icon" src="/static/gallery/icons/profile.png"/></div><div class="chat_ref_name">{1}</div></div></div></a>'''
 
 
 app = Flask(__name__)
@@ -118,7 +106,23 @@ def register():
 @app.route('/messenger')
 @login_required
 def messenger():
-    return render_template("messenger.html")
+    chat_refs = ""
+    if curr_user:
+        chats = dbase.getChatsByUserId(curr_user.get_id())
+
+        for _chat in chats:
+            _user0_id = _chat['user_id0']
+            _user1_id = _chat['user_id1']
+
+            if curr_user.get_id() == _user0_id:
+                _opponent_id = _user0_id
+            else:
+                _opponent_id = _user1_id
+
+            _opponent_user_name = str(UserLogin().create(dbase.getUserById(_opponent_id)).get_name())
+            chat_refs += CHAT_REF.format(_chat['id'], _opponent_user_name)
+
+    return render_template("messenger.html").format(chat_refs)
 
 
 @app.route('/personlist', methods=['POST', "GET"])
@@ -158,10 +162,26 @@ def chat(id):
 
     all = []
 
-    opponent_user_name = str(UserLogin().create(dbase.getUserById(opponent_id)).get_name())
+    chat_refs = ""
+    chats = dbase.getChatsByUserId(curr_user.get_id())
 
-    all.append(CHAT_REF.format(id, opponent_user_name))
+    for _chat in chats:
+        _user0_id = _chat['user_id0']
+        _user1_id = _chat['user_id1']
+
+        if curr_user.get_id() == _user0_id:
+            _opponent_id = _user0_id
+        else:
+            _opponent_id = _user1_id
+
+        _opponent_user_name = str(UserLogin().create(dbase.getUserById(_opponent_id)).get_name())
+        chat_refs += CHAT_REF.format(_chat['id'], _opponent_user_name)
+
+    all.append(chat_refs)
+
+    opponent_user_name = str(UserLogin().create(dbase.getUserById(opponent_id)).get_name())
     all.append(opponent_user_name)
+
     messages_all = dbase.getMessagesByChatId(chat.get_id())
     messages = ""
     if messages_all:

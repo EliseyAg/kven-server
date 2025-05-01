@@ -85,6 +85,25 @@ class FDataBase:
 
         return False
 
+    def getChatsByUserId(self, user_id):
+        try:
+            self.__cur.execute(f"SELECT * FROM chats WHERE user_id0 = '{user_id}' OR user_id1 = '{user_id}'")
+            row = self.__cur.fetchone()
+            res = []
+            while row is not None:
+                res.append(row)
+                row = self.__cur.fetchone()
+
+            if not res:
+                print("Чаты не найдены")
+                return False
+
+            return res
+        except sqlite3.Error as e:
+            print("Ошибка получения данных из БД " + str(e))
+
+        return False
+
     def addMessage(self, chat_id, text):
         try:
             tm = math.floor(time.time())
