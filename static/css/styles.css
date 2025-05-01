@@ -24,6 +24,10 @@ body {
     flex-wrap: nowrap;
 }
 
+#navmenu li {
+    display: flex;
+}
+
 #navmenu a:hover {
     border-radius: 10px 10px;
     background-color: #DAA520;
@@ -31,26 +35,30 @@ body {
 
 .messenger {
     display: flex;
-    top: 100%;
     height: 100%;
+    width: 100%;
     flex-direction: row;
     flex-wrap: nowrap;
+    position: fixed;
 }
 
 .chats_list {
     display: flex;
-    top: 100%;
-    height: 100%;
+    position: fixed;
+    height: calc(100% - 150px);
     left: 0;
     width: 20%;
     flex-direction: column;
     align-items: center;
+    overflow-y:scroll;
 }
 
 .chat_ref__outer {
     display: flex;
     height: 80px;
     width: 100%;
+    margin-top: 5px;
+    margin-bottom: 5px;
     align-items: center;
     justify-content: center;
 }
@@ -79,6 +87,82 @@ body {
     top: 0;
 }
 
+.chat_list_bottom__outer {
+    display: flex;
+    position: fixed;
+    width: 20%;
+    height: 100px;
+    bottom: 0;
+
+    align-items: center;
+    justify-content: center;
+}
+
+.chat_list_bottom__inner {
+    display: flex;
+    position: fixed;
+    margin-top: 10px;
+    margin-right: 10px;
+    margin-left: 10px;
+    bottom: 0;
+    height: 100px;
+    width: 15%;
+    border-radius: 10px 10px;
+
+    background-color: #DCDCDC;
+
+    align-items: center;
+    justify-content: center;
+}
+
+#button_new_chat div {
+    display: flex;
+    position: relative;
+    margin: 20px;
+    padding: 20px;
+    border-radius: 5px 5px;
+}
+
+#button_new_chat li {
+    display: inline;
+    float: left;
+    position: relative;
+    padding: 20px;
+    width: 100%;
+}
+
+#button_new_chat a:hover {
+    position: relative;
+    padding: 10px;
+    border-radius: 10px 10px;
+    background-color: #FFFAFA;
+}
+
+.chat_body {
+    display: flex;
+    position: fixed;
+    right: 0;
+    justify-content: flex-start;
+    align-items: center;
+    width: 75%;
+    height: 95%;
+    margin: 2.5%;
+
+    flex-direction: column;
+    align-items: center;
+
+    overflow-y:scroll;
+}
+
+.chat {
+    margin-right: 10%;
+    margin-left: 10%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 75%;
+}
+
 .bottom_row {
     position:absolute;
     bottom:0;
@@ -99,42 +183,8 @@ body {
     width: 75%;
 }
 
-#button_fdsdfad ul {
-    display: none;
-    position: relative;
-    margin: 20px;
-    padding: 20px;
-    background-color: #FFFAFA;
-    border-radius: 5px 5px;
-}
-
-#button_fdsdfad li {
-    display: inline;
-    float: left;
-    position: relative;
-    text-align: left;
-    padding: 20px;
-    width: 100%;
-}
-
-#button_fdsdfad a:hover {
-    position: relative;
-    padding: 10px;
-    border-radius: 10px 10px;
-    background-color: #DAA520;
-}
-
 .preformatted-text {
     white-space: pre-wrap;
-}
-
-.chat {
-    margin-right: 10%;
-    margin-left: 10%;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    width: 75%;
 }
 
 #bottom-pos {
