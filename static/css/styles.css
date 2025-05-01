@@ -145,22 +145,58 @@ body {
     justify-content: flex-start;
     align-items: center;
     width: 75%;
-    height: 95%;
-    margin: 2.5%;
+    height: 100%;
+    margin-left: 5%;
 
     flex-direction: column;
     align-items: center;
-
-    overflow-y:scroll;
 }
 
-.chat {
-    margin-right: 10%;
-    margin-left: 10%;
+.chat_footer {
+    position: fixed;
+    width: 70%;
+    height: 100px;
     display: flex;
     justify-content: flex-start;
     align-items: center;
+
+    margin: 10px;
+    border-radius: 10px 10px;
+    background-color: #DCDCDC;
+}
+
+.chat {
+    display: flex;
+    position: relative;
+    justify-content: flex-start;
+    align-items: center;
+    top: 115px;
+    height: calc(100% - 420px);
     width: 75%;
+
+    flex-direction: column;
+    overflow-y:scroll;
+}
+
+.chat_bottom {
+    display: flex;
+    position: fixed;
+    justify-content: flex-start;
+    align-items: center;
+    bottom: 100px;
+    height: 100px;
+    width: 50%;
+
+    border-radius: 10px 10px;
+    background-color: #DCDCDC;
+
+    flex-direction: row;
+}
+
+.button_send {
+    position: relative;
+    align-items: center;
+    right: 0;
 }
 
 .bottom_row {

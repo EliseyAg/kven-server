@@ -9,20 +9,19 @@
 {% endblock %}
 
 {% block chat %}
-<div class="chat">
-    <div class="preformatted-text">
-        <iframe id="FrameID" style="border: none;" srcdoc="{2}"></iframe>
-    </div>
+
+<div class="chat_footer">
+
 </div>
 
-<div id="bottom-pos">
-    <cont>
-        <form action="" method="post" class="form-contact">
-            <p><label>Сообщение: </label> <input type="text" name="message" value="" requered></p>
-            <p><input type="submit" value="Отправить"></p>
-            <hr aligh=left width="100%">
-        </form>
-    </cont>
+<div class="chat">
+    {2}
+</div>
+
+<div class="chat_bottom">
+    <form action="" method="post">
+        <div><label>Написать: </label><input type="text" name="message" value="" requered><input type="submit" value="Отправить"></div>
+    </form>
 </div>
 
 <script type="text/javascript" src={{url_for('static',filename='JS/autorefresh.js')}}></script>

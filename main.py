@@ -109,18 +109,18 @@ def messenger():
     chat_refs = ""
     if curr_user:
         chats = dbase.getChatsByUserId(curr_user.get_id())
+        if chats:
+            for _chat in chats:
+                _user0_id = _chat['user_id0']
+                _user1_id = _chat['user_id1']
 
-        for _chat in chats:
-            _user0_id = _chat['user_id0']
-            _user1_id = _chat['user_id1']
+                if curr_user.get_id() == _user0_id:
+                    _opponent_id = _user1_id
+                else:
+                    _opponent_id = _user0_id
 
-            if curr_user.get_id() == _user0_id:
-                _opponent_id = _user1_id
-            else:
-                _opponent_id = _user0_id
-
-            _opponent_user_name = str(UserLogin().create(dbase.getUserById(_opponent_id)).get_name())
-            chat_refs += CHAT_REF.format(_chat['id'], _opponent_user_name)
+                _opponent_user_name = str(UserLogin().create(dbase.getUserById(_opponent_id)).get_name())
+                chat_refs += CHAT_REF.format(_chat['id'], _opponent_user_name)
 
     return render_template("messenger.html").format(chat_refs)
 
@@ -165,17 +165,18 @@ def chat(id):
     chat_refs = ""
     chats = dbase.getChatsByUserId(curr_user.get_id())
 
-    for _chat in chats:
-        _user0_id = _chat['user_id0']
-        _user1_id = _chat['user_id1']
+    if chats:
+        for _chat in chats:
+            _user0_id = _chat['user_id0']
+            _user1_id = _chat['user_id1']
 
-        if curr_user.get_id() == _user0_id:
-            _opponent_id = _user1_id
-        else:
-            _opponent_id = _user0_id
+            if curr_user.get_id() == _user0_id:
+                _opponent_id = _user1_id
+            else:
+                _opponent_id = _user0_id
 
-        _opponent_user_name = str(UserLogin().create(dbase.getUserById(_opponent_id)).get_name())
-        chat_refs += CHAT_REF.format(_chat['id'], _opponent_user_name)
+            _opponent_user_name = str(UserLogin().create(dbase.getUserById(_opponent_id)).get_name())
+            chat_refs += CHAT_REF.format(_chat['id'], _opponent_user_name)
 
     all.append(chat_refs)
 
