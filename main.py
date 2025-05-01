@@ -147,7 +147,7 @@ def chat(id):
         if curr_user:
             message = request.form['message']
             chat_id = chat.get_id()
-            dbase.addMessage(chat_id, message)
+            dbase.addMessage(chat_id, message, "TEXT")
 
     user0_id = chat.get_users_id().split()[0]
     user1_id = chat.get_users_id().split()[1]
