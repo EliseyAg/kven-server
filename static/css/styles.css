@@ -199,6 +199,39 @@ body {
     right: 0;
 }
 
+.message_RTL {
+    align-items: right;
+    width: 100%;
+}
+
+.message__outer {
+    display: flex;
+    margin: 10px;
+}
+
+.message__inner {
+    flex: 1;
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.message__actions {
+    width: 67px;
+    padding-right: 5px;
+}
+
+.message__spacer {
+    flex: 1;
+}
+
+.message__bubble {
+    max-width: calc(100% - 67px);
+    overflow-wrap: break-word;
+    padding: 5px;
+    border-radius: 15px;
+    background-color: #DCDCDC;
+}
+
 .bottom_row {
     position:absolute;
     bottom:0;
