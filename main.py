@@ -57,7 +57,6 @@ def get_db():
 
 
 dbase = None
-curr_user = None
 
 
 @app.before_request
@@ -81,7 +80,6 @@ def index():
 @app.route('/login', methods=['POST', "GET"])
 def login():
     if current_user.is_authenticated:
-        curr_user = UserLogin().fromDB(current_user.get_id(), dbase)
         return redirect("/profile")
 
     if request.method == "POST":
@@ -116,16 +114,14 @@ def register():
 @login_required
 def messenger():
     chat_refs = ""
-    if current_user.is_authenticated:
-        curr_user = UserLogin().fromDB(current_user.get_id(), dbase)
-    if curr_user:
-        chats = dbase.getChatsByUserId(curr_user.get_id())
+    if current_user:
+        chats = dbase.getChatsByUserId(current_user.get_id())
         if chats:
             for _chat in chats:
                 _user0_id = _chat['user_id0']
                 _user1_id = _chat['user_id1']
 
-                if curr_user.get_id() == _user0_id:
+                if current_user.get_id() == _user0_id:
                     _opponent_id = _user1_id
                 else:
                     _opponent_id = _user0_id
@@ -140,9 +136,9 @@ def messenger():
 @login_required
 def personlist():
     if request.method == "POST":
-        if curr_user:
+        if current_user:
             user_1_id = dbase.getUserById(request.form['id'])['id']
-            dbase.addChat("", curr_user.get_id(), user_1_id)
+            dbase.addChat("", current_user.get_id(), user_1_id)
         return redirect("/messenger")
 
     return render_template("personlist.html")
@@ -153,37 +149,34 @@ def personlist():
 def chat(id):
     chat = Chat().create(dbase.getChatById(id))
 
-    if current_user.is_authenticated:
-        curr_user = UserLogin().fromDB(current_user.get_id(), dbase)
-
     if request.method == "POST":
-        if curr_user:
+        if current_user:
             message = request.form['message']
             chat_id = chat.get_id()
-            dbase.addMessage(curr_user.get_id(), chat_id, message, "TEXT")
+            dbase.addMessage(current_user.get_id(), chat_id, message, "TEXT")
 
     user0_id = chat.get_users_id().split()[0]
     user1_id = chat.get_users_id().split()[1]
 
-    if curr_user.get_id() == user0_id:
+    if current_user.get_id() == user0_id:
         opponent_id = user1_id
     else:
         opponent_id = user0_id
 
-    if not(user0_id == curr_user.get_id() or user1_id == curr_user.get_id()):
+    if not(user0_id == current_user.get_id() or user1_id == current_user.get_id()):
         return redirect("/messenger")
 
     all = []
 
     chat_refs = ""
-    chats = dbase.getChatsByUserId(curr_user.get_id())
+    chats = dbase.getChatsByUserId(current_user.get_id())
 
     if chats:
         for _chat in chats:
             _user0_id = _chat['user_id0']
             _user1_id = _chat['user_id1']
 
-            if curr_user.get_id() == _user0_id:
+            if current_user.get_id() == _user0_id:
                 _opponent_id = _user1_id
             else:
                 _opponent_id = _user0_id
@@ -200,7 +193,7 @@ def chat(id):
     messages = ""
     if messages_all:
         for message in messages_all:
-            if message['sender'] == curr_user.get_id():
+            if message['sender'] == int(current_user.get_id()):
                 messages += '<br>' + RTL_MESSAGE.format(message['text'])
             else:
                 messages += '<br>' + LTL_MESSAGE.format(message['text'])
