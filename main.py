@@ -101,6 +101,10 @@ def register():
             res = dbase.addUser(request.form['username'], hash)
             if res:
                 flash("Вы успешно зарегистрированы", "success")
+                user = dbase.getUserByName(request.form['username'])
+                user_login = UserLogin().create(user)
+                rm = True if request.form.get('remainme') else False
+                login_user(user_login, remember=rm)
                 return redirect("/profile")
             else:
                 flash("Ошибка при добавлении в БД", "error")
