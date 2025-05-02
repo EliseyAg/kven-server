@@ -15,7 +15,8 @@ DEBUG = True
 SECRET_KEY = 'jgfjlfkj765@68976,<34'
 
 CHAT_REF = '''<a class="chat_ref__outer" href="/chat/{0}"><div class="chat_ref__outer"><div class="chat_ref__inner"><div class="chat_ref_avatar"><img class="icon" src="/static/gallery/icons/profile.png"/></div><div class="chat_ref_name">{1}</div></div></div></a>'''
-RTL_MESSAGE = '''<div class="message_RTL"><div class="message__outer"><div class="message__avatar"></div><div class="message__inner"><div class="message__bubble__blue">Привет</div><div class="message__actions"></div><div class="message__spacer"></div></div><div class="message__status"></div></div>'''
+RTL_MESSAGE = '''<div class="message_RTL"><div class="message__outer"><div class="message__avatar"></div><div class="message__inner"><div class="message__bubble__blue"><span>{0}</span></div><div class="message__actions"></div><div class="message__spacer"></div></div><div class="message__status"></div></div></div>'''
+LTL_MESSAGE = '''<div class="message_LTL"><div class="message__outer"><div class="message__inner"><div class="message__spacer"></div><div class="message__actions"></div><div class="message__bubble__grey"><span>{0}</span></div></div><div class="message__avatar"></div></div></div>'''
 
 
 app = Flask(__name__)
@@ -81,7 +82,6 @@ def index():
 def login():
     if current_user.is_authenticated:
         curr_user = UserLogin().fromDB(current_user.get_id(), dbase)
-        print(current_user.get_id())
         return redirect("/profile")
 
     if request.method == "POST":
@@ -160,7 +160,7 @@ def chat(id):
         if curr_user:
             message = request.form['message']
             chat_id = chat.get_id()
-            dbase.addMessage(chat_id, message, "TEXT")
+            dbase.addMessage(curr_user.get_id(), chat_id, message, "TEXT")
 
     user0_id = chat.get_users_id().split()[0]
     user1_id = chat.get_users_id().split()[1]
@@ -200,13 +200,15 @@ def chat(id):
     messages = ""
     if messages_all:
         for message in messages_all:
-            messages += '<br><span>' + message['text'] + '</span>'
+            if message['sender'] == curr_user.get_id():
+                messages += '<br>' + RTL_MESSAGE.format(message['text'])
+            else:
+                messages += '<br>' + LTL_MESSAGE.format(message['text'])
 
     if not(messages):
         messages = ""
 
     all.append(messages)
-    print(all)
 
     return render_template("chat.html").format(*all)
 

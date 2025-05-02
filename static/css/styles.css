@@ -201,11 +201,13 @@ body {
 
 .message_RTL {
     align-items: right;
+    justify-content: flex-right;
     width: 100%;
 }
 
 .message_LTL {
     align-items: left;
+    justify-content: flex-left;
     width: 100%;
 }
 
@@ -232,17 +234,24 @@ body {
 .message__bubble__blue {
     max-width: calc(100% - 67px);
     overflow-wrap: break-word;
-    padding: 5px;
+    padding: 10px;
     border-radius: 15px;
-    background-color: #DCDCDC;
+    background-color: #000080;
+}
+.message__bubble__blue span {
+    color: #FFFAFA;
 }
 
 .message__bubble__grey {
     max-width: calc(100% - 67px);
     overflow-wrap: break-word;
-    padding: 5px;
+    padding: 10px;
     border-radius: 15px;
     background-color: #DCDCDC;
+}
+
+.message__bubble__grey span {
+    color: #000000;
 }
 
 .bottom_row {

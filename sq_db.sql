@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS chats (
 
 CREATE TABLE IF NOT EXISTS messages (
     id integer PRIMARY KEY AUTOINCREMENT,
+    sender integer NOT NULL,
     chat_id NOT NULL,
     text text NOT NULL,
     type text NOT NULL,
