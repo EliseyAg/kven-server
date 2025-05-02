@@ -138,7 +138,8 @@ def personlist():
     if request.method == "POST":
         if current_user:
             user_1_id = dbase.getUserById(request.form['id'])['id']
-            dbase.addChat("", current_user.get_id(), user_1_id)
+            if not(dbase.getChatByUsersId(current_user.get_id(), user_1_id)) and current_user.get_id() != user_1_id:
+                dbase.addChat("", current_user.get_id(), user_1_id)
         return redirect("/messenger")
 
     chat_refs = ""
@@ -168,8 +169,9 @@ def chat(id):
     if request.method == "POST":
         if current_user:
             message = request.form['message']
-            chat_id = chat.get_id()
-            dbase.addMessage(current_user.get_id(), chat_id, message, "TEXT")
+            if message != "":
+                chat_id = chat.get_id()
+                dbase.addMessage(current_user.get_id(), chat_id, message, "TEXT")
 
     user0_id = chat.get_users_id().split()[0]
     user1_id = chat.get_users_id().split()[1]
