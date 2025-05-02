@@ -141,7 +141,23 @@ def personlist():
             dbase.addChat("", current_user.get_id(), user_1_id)
         return redirect("/messenger")
 
-    return render_template("personlist.html")
+    chat_refs = ""
+    if current_user:
+        chats = dbase.getChatsByUserId(current_user.get_id())
+        if chats:
+            for _chat in chats:
+                _user0_id = _chat['user_id0']
+                _user1_id = _chat['user_id1']
+
+                if current_user.get_id() == _user0_id:
+                    _opponent_id = _user1_id
+                else:
+                    _opponent_id = _user0_id
+
+                _opponent_user_name = str(dbase.getUserById(_opponent_id)['username'])
+                chat_refs += CHAT_REF.format(_chat['id'], _opponent_user_name)
+
+    return render_template("personlist.html").format(chat_refs)
 
 
 @app.route('/chat/<int:id>', methods=['POST', "GET"])

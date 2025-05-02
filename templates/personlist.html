@@ -1,14 +1,12 @@
-{% extends 'base.html' %}
+{% extends 'messenger.html' %}
 
 {% block title %}
 Список
 {% endblock %}
 
-{% block body %}
-<div class="container">
-    <form action="/personlist" method="POST" class="form-contact">
-        <p><label>ID: </label> <input type="text" name="id" value="" requered></p>
-        <p><input type="submit" value="Найти человека по id"></p>
-    </form>
-</div>
+{% block chat %}
+<form action="/personlist" method="POST" class="form-contact">
+    <p><label>ID: </label> <input type="text" name="id" value="" requered></p>
+    <p><input type="submit" value="Найти человека по id"></p>
+</form>
 {% endblock %}

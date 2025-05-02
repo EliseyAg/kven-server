@@ -109,7 +109,7 @@ body {
     width: 15%;
     border-radius: 10px 10px;
 
-    background-color: #DCDCDC;
+    background-color: #000080;
 
     align-items: center;
     justify-content: center;
@@ -131,11 +131,26 @@ body {
     width: 100%;
 }
 
+#button_new_chat span {
+    font-size: 22px;
+    color: #FFFAFA;
+}
+
 #button_new_chat a:hover {
     position: relative;
-    padding: 10px;
+    padding: 20px;
+    margin-top: 10px;
+    margin-right: 10px;
+    margin-left: 10px;
+    bottom: 0;
+    height: 100px;
     border-radius: 10px 10px;
     background-color: #FFFAFA;
+}
+
+#button_new_chat a:hover span {
+    font-size: 22px;
+    color: #000080;
 }
 
 .chat_body {
