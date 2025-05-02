@@ -213,7 +213,7 @@ body {
 
 .message__outer {
     display: flex;
-    margin: 10px;
+    margin: 2.5px;
 }
 
 .message__inner {

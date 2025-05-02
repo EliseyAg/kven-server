@@ -194,9 +194,9 @@ def chat(id):
     if messages_all:
         for message in messages_all:
             if message['sender'] == int(current_user.get_id()):
-                messages += '<br>' + RTL_MESSAGE.format(message['text'])
+                messages += RTL_MESSAGE.format(message['text'])
             else:
-                messages += '<br>' + LTL_MESSAGE.format(message['text'])
+                messages += LTL_MESSAGE.format(message['text'])
 
     if not(messages):
         messages = ""
