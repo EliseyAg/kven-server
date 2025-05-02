@@ -24,6 +24,9 @@ app.config.update(dict(DATABASE=os.path.join(app.root_path, 'dbase.db')))
 #app.config['SERVER_NAME'] = "0.0.0.0"
 
 login_manager = LoginManager(app)
+login_manager.login_view = 'login'
+login_manager.login_message = 'Авторизуйтесь для доступа к закрытым страницам'
+login_manager.login_message_category = 'success'
 
 
 @login_manager.user_loader
@@ -76,13 +79,17 @@ def index():
 
 @app.route('/login', methods=['POST', "GET"])
 def login():
+    if current_user.is_authenticated:
+        curr_user = UserLogin().fromDB(current_user.get_id(), dbase)
+        print(current_user.get_id())
+        return redirect("/profile")
+
     if request.method == "POST":
-        global curr_user
         user = dbase.getUserByName(request.form['username'])
         if user and check_password_hash(user['psw'], request.form['password']):
-            curr_user = UserLogin().create(user)
+            user_login = UserLogin().create(user)
             rm = True if request.form.get('remainme') else False
-            login_user(curr_user, remember=rm)
+            login_user(user_login, remember=rm)
             return redirect("/profile")
 
     return render_template("login.html")
@@ -109,6 +116,8 @@ def register():
 @login_required
 def messenger():
     chat_refs = ""
+    if current_user.is_authenticated:
+        curr_user = UserLogin().fromDB(current_user.get_id(), dbase)
     if curr_user:
         chats = dbase.getChatsByUserId(curr_user.get_id())
         if chats:
@@ -121,7 +130,7 @@ def messenger():
                 else:
                     _opponent_id = _user0_id
 
-                _opponent_user_name = str(UserLogin().create(dbase.getUserById(_opponent_id)).get_name())
+                _opponent_user_name = str(dbase.getUserById(_opponent_id)['username'])
                 chat_refs += CHAT_REF.format(_chat['id'], _opponent_user_name)
 
     return render_template("messenger.html").format(chat_refs)
@@ -132,9 +141,8 @@ def messenger():
 def personlist():
     if request.method == "POST":
         if curr_user:
-            user_1_id = UserLogin().create(dbase.getUserById(request.form['id'])).get_id()
-            curr_user_id = curr_user.get_id()
-            dbase.addChat("", curr_user_id, user_1_id)
+            user_1_id = dbase.getUserById(request.form['id'])['id']
+            dbase.addChat("", curr_user.get_id(), user_1_id)
         return redirect("/messenger")
 
     return render_template("personlist.html")
@@ -144,6 +152,9 @@ def personlist():
 @login_required
 def chat(id):
     chat = Chat().create(dbase.getChatById(id))
+
+    if current_user.is_authenticated:
+        curr_user = UserLogin().fromDB(current_user.get_id(), dbase)
 
     if request.method == "POST":
         if curr_user:
@@ -177,12 +188,12 @@ def chat(id):
             else:
                 _opponent_id = _user0_id
 
-            _opponent_user_name = str(UserLogin().create(dbase.getUserById(_opponent_id)).get_name())
+            _opponent_user_name = str(dbase.getUserById(_opponent_id)['username'])
             chat_refs += CHAT_REF.format(_chat['id'], _opponent_user_name)
 
     all.append(chat_refs)
 
-    opponent_user_name = str(UserLogin().create(dbase.getUserById(opponent_id)).get_name())
+    opponent_user_name = str(dbase.getUserById(opponent_id)['username'])
     all.append(opponent_user_name)
 
     messages_all = dbase.getMessagesByChatId(chat.get_id())
