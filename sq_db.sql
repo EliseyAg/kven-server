@@ -17,7 +17,17 @@ CREATE TABLE IF NOT EXISTS messages (
     sender integer NOT NULL,
     chat_id NOT NULL,
     text text NOT NULL,
+    reply_id integer NULL,
     type text NOT NULL,
+    time integer NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS commentary (
+    id integer PRIMARY KEY AUTOINCREMENT,
+    is_reply bool NOT NULL,
+    post_id integer NOT NULL,
+    sender text NOT NULL,
+    likes integer NOT NULL,
     time integer NOT NULL
 );
 
@@ -31,6 +41,7 @@ CREATE TABLE IF NOT EXISTS video (
 
 CREATE TABLE IF NOT EXISTS posts (
     id integer PRIMARY KEY AUTOINCREMENT,
+    sender integer NOT NULL,
     text text NOT NULL,
     type text NOT NULL,
     views integer NOT NULL,
