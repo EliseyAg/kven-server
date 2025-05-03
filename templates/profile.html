@@ -5,7 +5,35 @@
 {% endblock %}
 
 {% block body %}
-<div class="container">
-    <p><a href="/logout">Выйти из профиля</a></p>
+<div class="centred-container">
+    <div class="profile__outer">
+        <div class="profile__inner">
+            <div class="profile__spacer"></div>
+            <div class="profile__inner__bubble">
+                <div class="profile__spacer"></div>
+                <div class="profile__avatar">
+                    <img class="avatar" src="/static/gallery/avatars/1.png"/>
+                </div>
+                <div class="profile__bubble__container">
+                    <div class="profile__info">
+                        <div class="profile__bubble">
+                            <div class="profile__bubble__username">
+                                <span>Username</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="profile__spacer"></div>
+                    <div class="profile__logout__button">
+                        <div class="profile__logout__button__bubble">
+                            <span id="profile__logout__button__bubble"><a href="/logout">Выйти из профиля</a></span>
+                        </div>
+                    </div>
+                    <div class="profile__spacer"></div>
+                </div>
+                <div class="profile__spacer"></div>
+            </div>
+            <div class="profile__spacer"></div>
+        </div>
+    </div>
 </div>
 {% endblock %}

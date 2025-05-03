@@ -123,10 +123,10 @@ class FDataBase:
 
         return False
 
-    def addMessage(self, user_id, chat_id, text, tp):
+    def addMessage(self, user_id, chat_id, text, tp, reply_id=-1):
         try:
             tm = math.floor(time.time())
-            self.__cur.execute("INSERT INTO messages VALUES(NULL, ?, ?, ?, ?, ?)", (user_id, chat_id, text, tp, tm))
+            self.__cur.execute("INSERT INTO messages VALUES(NULL, ?, ?, ?, ?, ?, ?)", (user_id, chat_id, text, reply_id, tp, tm))
             self.__db.commit()
         except sqlite3.Error as e:
             print("Ошибка добавления в БД: " + str(e))
