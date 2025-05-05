@@ -2,6 +2,10 @@ body {
   overflow: hidden;
 }
 
+icon {
+    width: 32px;
+}
+
 .navmenu__outer {
     display: flex;
     align-items: center;
@@ -24,6 +28,11 @@ body {
     flex-wrap: nowrap;
 }
 
+#navmenu {
+    display: flex;
+    flex-direction: row;
+}
+
 #navmenu li {
     display: flex;
 }
@@ -31,6 +40,10 @@ body {
 #navmenu a:hover {
     border-radius: 10px 10px;
     background-color: #DAA520;
+}
+
+#navmenu icon {
+    width: 64px;
 }
 
 .messenger {
@@ -350,7 +363,7 @@ body {
     display: flex;
     color: #FFFAFA;
     font-weight: bold;
-    font-size: 22px;
+    font-size: 30px;
 }
 
 .profile__logout__button {
@@ -375,7 +388,7 @@ body {
     display: flex;
     color: #FFFAFA;
     font-weight: bold;
-    font-size: 22px;
+    font-size: 30px;
 }
 
 .profile__spacer {
@@ -475,6 +488,22 @@ body {
     font-weight: bold;
 }
 
+.vertical_line {
+    border-left: 2px solid #FFFAFA;
+}
+
+.post__date {
+    display: flex;
+
+    margin: 2.5px;
+}
+
+.post__date span {
+    color: #FFFAFA;
+    font-size: 20px;
+    font-weight: bold;
+}
+
 .post__body__outer {
     display: flex;
 }
@@ -520,9 +549,34 @@ body {
     border-radius: 15px;
     padding: 10px;
 
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     justify-content: flex-center;
+}
+
+.post__views__outer {
+    flex: 1;
+    display: flex;
+}
+
+.post__views__inner {
+    flex: 1;
+    display: flex;
+
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-center;
+}
+
+.post__views__text {
+    flex: 1;
+    display: flex;
+}
+
+.post__views__text span {
+    color: #000080;
+    font-size: 18px;
+    font-weight: bold;
 }
 
 .universal_spacer {
