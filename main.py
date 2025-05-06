@@ -14,7 +14,7 @@ DATABASE = '/tmp/dbase.bd'
 DEBUG = True
 SECRET_KEY = 'jgfjlfkj765@68976,<34'
 
-CHAT_REF = '''<a class="chat_ref__outer" href="/chat/{0}"><div class="chat_ref__outer"><div class="chat_ref__inner"><div class="chat_ref_avatar"><img class="icon" src="/static/gallery/icons/profile.png"/></div><div class="chat_ref_name">{1}</div></div></div></a>'''
+CHAT_REF = '''<a class="chat_ref__outer" href="/chat/{0}"><div class="chat_ref__outer"><div class="chat_ref__inner"><div class="chat_ref_avatar"><icon><img class="icon" src="/static/gallery/icons/profile.png"/ width="100%"></icon></div><div class="chat_ref_name">{1}</div></div></div></a>'''
 RTL_MESSAGE = '''<div class="message_RTL"><div class="message__outer"><div class="message__avatar"></div><div class="message__inner"><div class="message__bubble__blue"><span>{0}</span></div><div class="message__actions"></div><div class="message__spacer"></div></div><div class="message__status"></div></div></div>'''
 LTL_MESSAGE = '''<div class="message_LTL"><div class="message__outer"><div class="message__inner"><div class="message__spacer"></div><div class="message__actions"></div><div class="message__bubble__grey"><span>{0}</span></div></div><div class="message__avatar"></div></div></div>'''
 

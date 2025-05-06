@@ -93,6 +93,10 @@ icon {
     margin: 10px;
 }
 
+.chat_ref_avatar icon {
+    width: 64px;
+}
+
 .chat_ref_name {
     display: flex;
     position: relative;
