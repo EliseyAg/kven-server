@@ -93,7 +93,7 @@ icon {
     margin: 10px;
 }
 
-.chat_ref_avatar icon {
+.   chat_ref_avatar icon {
     width: 64px;
 }
 
@@ -561,11 +561,15 @@ icon {
 .post__views__outer {
     flex: 1;
     display: flex;
+
+    max-width: 100px;
 }
 
 .post__views__inner {
     flex: 1;
     display: flex;
+
+    margin: 5px;
 
     flex-direction: row;
     align-items: center;
@@ -578,6 +582,41 @@ icon {
 }
 
 .post__views__text span {
+    color: #000080;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.post__commentaries__outer {
+    flex: 1;
+    display: flex;
+
+    max-width: 100px;
+    align-items: left;
+    justify-content: left;
+}
+
+.post__commentaries__inner {
+    flex: 1;
+    display: flex;
+
+    margin: 5px;
+
+    flex-direction: row;
+    align-items: left;
+    justify-content: left;
+}
+
+.post__commentaries__text {
+    display: flex;
+
+    margin-right: 5px;
+
+    align-items: left;
+    justify-content: left;
+}
+
+.post__commentaries__text span {
     color: #000080;
     font-size: 18px;
     font-weight: bold;
