@@ -11,7 +11,7 @@ class FDataBase:
     def addUser(self, username,  hashpass):
         try:
             tm = math.floor(time.time())
-            self.__cur.execute("INSERT INTO users VALUES(NULL, ?, ?, ?)", (username, hashpass, tm))
+            self.__cur.execute("INSERT INTO users VALUES(NULL, ?, ?, ?, ?)", (username, hashpass, None, tm))
             self.__db.commit()
         except sqlite3.Error as e:
             print("Ошибка добавления в БД: " + str(e))
