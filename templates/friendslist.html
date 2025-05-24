@@ -5,6 +5,17 @@
 {% endblock %}
 
 {% block body %}
+<a class="chat_ref__outer" href="/chat/{0}">
+    <div class="chat_ref__outer">
+        <div class="chat_ref__inner">
+            <div class="chat_ref_avatar">
+                <icon><img class="icon" src="/static/gallery/icons/profile.png" width="100%"></icon>
+            </div>
+            <div class="chat_ref_name">{1}</div>
+        </div>
+    </div>
+</a>
+
 <form action="/new_friend" method="POST" class="form-contact">
     <p><label>Username: </label> <input type="text" name="username" value="" requered></p>
     <p><input type="submit" value="Найти человека по имени"></p>
