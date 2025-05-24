@@ -15,3 +15,7 @@ class UserLogin(UserMixin):
 
     def get_name(self):
         return str(self.__user['username'])
+
+    def add_friend(self, db, friend_id):
+        db.addUserFriend(self.__user['id'], friend_id)
+        return self

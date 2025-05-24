@@ -11,7 +11,7 @@ class FDataBase:
     def addUser(self, username,  hashpass):
         try:
             tm = math.floor(time.time())
-            self.__cur.execute("INSERT INTO users VALUES(NULL, ?, ?, ?, ?)", (username, hashpass, None, tm))
+            self.__cur.execute("INSERT INTO users VALUES(NULL, ?, ?, ?, ?)", (username, hashpass, '', tm))
             self.__db.commit()
         except sqlite3.Error as e:
             print("Ошибка добавления в БД: " + str(e))
@@ -46,6 +46,29 @@ class FDataBase:
             print("Ошибка получения данных из БД " + str(e))
 
         return False
+
+    def addUserFriend(self, user_id, friend_id):
+        try:
+            self.__cur.execute(f"SELECT * FROM users WHERE id = '{user_id}' LIMIT 1")
+            res = self.__cur.fetchone()
+            if not res:
+                print("Чат не найден")
+                return False
+
+            friends_array = list(res['friends_id'].split())
+        except sqlite3.Error as e:
+            print("Ошибка получения данных из БД " + str(e))
+
+        friends_array.append(friend_id)
+
+        try:
+            self.__cur.execute(f"UPDATE users SET friends_id = '{friends_array}' WHERE id = '{user_id}'")
+            self.__db.commit()
+        except sqlite3.Error as e:
+            print("Ошибка добавления в БД: " + str(e))
+            return False
+
+        return True
 
     def addChat(self, name,  user0id, user1id):
         try:
