@@ -228,8 +228,18 @@ def chat(id):
     return render_template("chat.html").format(*all)
 
 
-@app.route('/friendslist')
+@app.route('/friendslist', methods=['POST', "GET"])
+@login_required
 def friendslist():
+    if request.method == "POST":
+        if current_user:
+            friend_id = dbase.getUserByName(request.form['username'])['id']
+            print(friend_id)
+            if not (friend_id in dbase.getUserFriends(current_user.get_id())) and int(current_user.get_id()) != int(friend_id):
+                dbase.addUserFriend(int(current_user.get_id()), int(friend_id))
+                dbase.addUserFriend(int(friend_id), int(current_user.get_id()))
+        return redirect("/friendslist")
+
     return render_template("friendslist.html")
 
 

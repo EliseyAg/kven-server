@@ -2,7 +2,7 @@ CREATE TABLE IF NOT EXISTS users (
     id integer PRIMARY KEY AUTOINCREMENT,
     username text NOT NULL,
     psw text NOT NULL,
-    friends_id string,
+    friends_id string NOT NULL,
     time integer NOT NULL
 );
 

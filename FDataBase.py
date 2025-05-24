@@ -11,7 +11,7 @@ class FDataBase:
     def addUser(self, username,  hashpass):
         try:
             tm = math.floor(time.time())
-            self.__cur.execute("INSERT INTO users VALUES(NULL, ?, ?, ?, ?)", (username, hashpass, '', tm))
+            self.__cur.execute("INSERT INTO users VALUES(NULL, ?, ?, ?, ?)", (username, hashpass, "[]", tm))
             self.__db.commit()
         except sqlite3.Error as e:
             print("Ошибка добавления в БД: " + str(e))
@@ -47,6 +47,24 @@ class FDataBase:
 
         return False
 
+    def getUserFriends(self, user_id):
+        try:
+            self.__cur.execute(f"SELECT * FROM users WHERE id = '{user_id}' LIMIT 1")
+            res = self.__cur.fetchone()
+            if not res:
+                print("Чат не найден")
+                return False
+
+            _friends_array = list((str(res['friends_id'])[1:-1]).split(', '))
+            if _friends_array == ['']:
+                friends_array = []
+            else:
+                friends_array = list(map(int, _friends_array))
+        except sqlite3.Error as e:
+            print("Ошибка получения данных из БД " + str(e))
+
+        return friends_array
+
     def addUserFriend(self, user_id, friend_id):
         try:
             self.__cur.execute(f"SELECT * FROM users WHERE id = '{user_id}' LIMIT 1")
@@ -55,7 +73,11 @@ class FDataBase:
                 print("Чат не найден")
                 return False
 
-            friends_array = list(res['friends_id'].split())
+            _friends_array = list((str(res['friends_id'])[1:-1]).split(', '))
+            if _friends_array == ['']:
+                friends_array = []
+            else:
+                friends_array = list(map(int, _friends_array))
         except sqlite3.Error as e:
             print("Ошибка получения данных из БД " + str(e))
 
