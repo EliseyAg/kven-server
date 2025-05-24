@@ -228,6 +228,11 @@ def chat(id):
     return render_template("chat.html").format(*all)
 
 
+@app.route('/friendslist')
+def friendslist():
+    return render_template("friendslist.html")
+
+
 @app.route('/about')
 def about():
     return render_template("about.html")
