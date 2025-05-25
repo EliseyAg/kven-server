@@ -287,6 +287,35 @@ icon {
     color: #000000;
 }
 
+.new_friend_search__outer {
+    display: flex;
+}
+
+.new_friend_search__inner {
+    display: flex;
+    flex: 1;
+    margin: 2.5px;
+    flex-direction: row;
+}
+
+.new_friend_search__bubble {
+    display: flex;
+    min-width: 50%;
+    padding: 10px;
+    border-radius: 15px;
+    background-color: #DCDCDC;
+    align-items: center;
+    justify-content: flex-center;
+}
+
+.friends_list_body {
+    display: flex;
+    justify-content: flex-start;
+
+    flex-direction: row;
+    align-items: center;
+}
+
 .fixed-container {
     display: flex;
 
