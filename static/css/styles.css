@@ -300,12 +300,15 @@ icon {
 
 .new_friend_search__bubble {
     display: flex;
-    min-width: 50%;
     padding: 10px;
     border-radius: 15px;
-    background-color: #DCDCDC;
+    background-color: #000080;
     align-items: center;
     justify-content: flex-center;
+}
+
+.new_friend_search__bubble span {
+    color: #FFFAFA;
 }
 
 .friends_list_body {
