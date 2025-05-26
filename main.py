@@ -17,6 +17,7 @@ SECRET_KEY = 'jgfjlfkj765@68976,<34'
 CHAT_REF = '''<a class="chat_ref__outer" href="/chat/{0}"><div class="chat_ref__outer"><div class="chat_ref__inner"><div class="chat_ref_avatar"><icon><img class="icon" src="/static/gallery/icons/profile.png" width="100%"></icon></div><div class="chat_ref_name">{1}</div></div></div></a>'''
 RTL_MESSAGE = '''<div class="message_RTL"><div class="message__outer"><div class="message__avatar"></div><div class="message__inner"><div class="message__bubble__blue"><span>{0}</span></div><div class="message__actions"></div><div class="message__spacer"></div></div><div class="message__status"></div></div></div>'''
 LTL_MESSAGE = '''<div class="message_LTL"><div class="message__outer"><div class="message__inner"><div class="message__spacer"></div><div class="message__actions"></div><div class="message__bubble__grey"><span>{0}</span></div></div><div class="message__avatar"></div></div></div>'''
+FRIEND_REF = '''<a class="friends_list_ref__outer" href="/{0}"><div class="friends_list_ref__outer"><div class="friends_list_ref__inner"><div class="universal_spacer"></div><div class="friends_list_ref__bubble"><div class="chat_ref_avatar"><icon><img class="icon" src="/static/gallery/icons/profile.png" width="100%"></icon></div><div class="chat_ref_name">{1}</div></div><div class="universal_spacer"></div></div></div></a>'''
 
 
 app = Flask(__name__)
@@ -240,7 +241,16 @@ def friendslist():
                 dbase.addUserFriend(int(friend_id), int(current_user.get_id()))
         return redirect("/friendslist")
 
-    return render_template("friendslist.html")
+    friend_refs = ""
+    if current_user:
+        friends = dbase.getUserFriends(current_user.get_id())
+        if friends:
+            for friend in friends:
+                print("friend_id = " + str(friend))
+                _friend_user_name = str(dbase.getUserById(friend)['username'])
+                friend_refs += FRIEND_REF.format(" ", _friend_user_name)
+
+    return render_template("friendslist.html").format(friend_refs)
 
 
 @app.route('/about')
