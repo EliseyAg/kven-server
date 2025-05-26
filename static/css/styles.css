@@ -289,6 +289,7 @@ icon {
 
 .new_friend_search__outer {
     display: flex;
+    width: 100%;
 }
 
 .new_friend_search__inner {
@@ -301,6 +302,7 @@ icon {
 .new_friend_search__bubble {
     display: flex;
     padding: 10px;
+    width: 40%;
     border-radius: 15px;
     background-color: #000080;
     align-items: center;
@@ -311,12 +313,47 @@ icon {
     color: #FFFAFA;
 }
 
-.friends_list_body {
+.friends_list_spacer {
     display: flex;
-    justify-content: flex-start;
+    height: 50px;
+}
 
+.friends_list__bubble {
+    position: fixed;
+    width: 40%;
+    top: 200px;
+    bottom: 100px;
+    margin-left: 30%;
+    margin-right: 30%;
+    padding: 20px;
+    border-radius: 15px;
+    background-color: #DCDCDC;
+    overflow-y: scroll;
+}
+
+#element {
+    scrollbar-width: none;
+}
+
+.friends_list_ref__outer {
+    display: flex;
+    width: 100%;
+}
+
+.friends_list_ref__inner {
+    display: flex;
+    flex: 1;
+    margin: 2.5px;
     flex-direction: row;
-    align-items: center;
+}
+
+.friends_list_ref__bubble {
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+    width: 60%;
+    border-radius: 15px;
+    background-color: #000080;
 }
 
 .fixed-container {
@@ -333,7 +370,6 @@ icon {
     height: 100%;
 
     flex-direction: column;
-    overflow-y: scroll;
 }
 
 .profile__outer {
