@@ -18,6 +18,7 @@ CHAT_REF = '''<a class="chat_ref__outer" href="/chat/{0}"><div class="chat_ref__
 RTL_MESSAGE = '''<div class="message_RTL"><div class="message__outer"><div class="message__avatar"></div><div class="message__inner"><div class="message__bubble__blue"><span>{0}</span></div><div class="message__actions"></div><div class="message__spacer"></div></div><div class="message__status"></div></div></div>'''
 LTL_MESSAGE = '''<div class="message_LTL"><div class="message__outer"><div class="message__inner"><div class="message__spacer"></div><div class="message__actions"></div><div class="message__bubble__grey"><span>{0}</span></div></div><div class="message__avatar"></div></div></div>'''
 FRIEND_REF = '''<a class="friends_list_ref__outer" href="/{0}"><div class="friends_list_ref__outer"><div class="friends_list_ref__inner"><div class="universal_spacer"></div><div class="friends_list_ref__bubble"><div class="chat_ref_avatar"><icon><img class="icon" src="/static/gallery/icons/profile.png" width="100%"></icon></div><div class="chat_ref_name">{1}</div></div><div class="universal_spacer"></div></div></div></a>'''
+FRIEND_REF_CHAT = '''<a class="friends_list_ref__outer" href="/newchat/{0}"><div class="friends_list_ref__outer"><div class="friends_list_ref__inner"><div class="universal_spacer"></div><div class="friends_list_ref__bubble"><div class="chat_ref_avatar"><icon><img class="icon" src="/static/gallery/icons/profile.png" width="100%"></icon></div><div class="chat_ref_name">{1}</div></div><div class="universal_spacer"></div></div></div></a>'''
 
 
 app = Flask(__name__)
@@ -147,6 +148,7 @@ def personlist():
                 dbase.addChat("", current_user.get_id(), user_1_id)
         return redirect("/messenger")
 
+    all = []
     chat_refs = ""
     if current_user:
         chats = dbase.getChatsByUserId(current_user.get_id())
@@ -163,7 +165,30 @@ def personlist():
                 _opponent_user_name = str(dbase.getUserById(_opponent_id)['username'])
                 chat_refs += CHAT_REF.format(_chat['id'], _opponent_user_name)
 
-    return render_template("personlist.html").format(chat_refs)
+        friends = dbase.getUserFriends(current_user.get_id())
+        friends_refs = ""
+        if friends:
+            for _friend_id in friends:
+                _friend = dbase.getUserById(_friend_id)
+                _friend_user_name = str(_friend['username'])
+                friends_refs += FRIEND_REF_CHAT.format(_friend['id'], _friend_user_name)
+
+    all.append(chat_refs)
+    all.append(friends_refs)
+
+    return render_template("personlist.html").format(*all)
+
+
+@app.route('/newchat/<int:id>')
+@login_required
+def newchat(id):
+    if current_user:
+        user_1_id = id
+        if not(dbase.getChatByUsersId(int(current_user.get_id()), user_1_id)) and (int(current_user.get_id()) != int(user_1_id)):
+            _chat = dbase.addChat("", current_user.get_id(), user_1_id)
+            return redirect("/chat/{0}", _chat['id'])
+
+    return redirect("/messenger")
 
 
 @app.route('/chat/<int:id>', methods=['POST', "GET"])

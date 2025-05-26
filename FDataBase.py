@@ -132,7 +132,7 @@ class FDataBase:
 
     def getChatByUsersId(self, user0_id, user1_id):
         try:
-            self.__cur.execute(f"SELECT * FROM chats WHERE user_id0 = '{user0_id}' OR user_id1 = '{user1_id}'")
+            self.__cur.execute(f"SELECT * FROM chats WHERE (user_id0 = '{user0_id}' AND user_id1 = '{user1_id}') OR (user_id1 = '{user0_id}' AND user_id0 = '{user1_id}')")
             row = self.__cur.fetchone()
             res = []
             while row is not None:

@@ -5,8 +5,23 @@
 {% endblock %}
 
 {% block chat %}
-<form action="/personlist" method="POST" class="form-contact">
-    <p><label>ID: </label> <input type="text" name="id" value="" requered></p>
-    <p><input type="submit" value="Найти человека по id"></p>
-</form>
+<div class="new_friend_search__outer">
+    <div class="new_friend_search__inner">
+        <div class="universal_spacer"></div>
+        <div class="new_friend_search__bubble">
+            <form action="/personlist" method="POST" class="form-contact">
+                <span><label>ID: </label> <input type="text" name="id" value="" requered></span>
+                <span><input type="submit" value="Найти человека по id"></span>
+            </form>
+        </div>
+        <div class="universal_spacer"></div>
+    </div>
+</div>
+
+
+<div class="centred-container">
+    <div class="friends_list__bubble" id="element">
+        {1}
+    </div>
+</div>
 {% endblock %}
