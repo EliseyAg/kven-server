@@ -185,8 +185,9 @@ def newchat(id):
     if current_user:
         user_1_id = id
         if not(dbase.getChatByUsersId(int(current_user.get_id()), user_1_id)) and (int(current_user.get_id()) != int(user_1_id)):
-            _chat = dbase.addChat("", current_user.get_id(), user_1_id)
-            return redirect("/chat/{0}", _chat['id'])
+            dbase.addChat("", int(current_user.get_id()), int(user_1_id))
+            _chat = dbase.getChatByUsersId(int(current_user.get_id()), int(user_1_id))['id']
+            return redirect("/chat/{0}".format(_chat))
 
     return redirect("/messenger")
 
