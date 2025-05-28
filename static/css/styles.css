@@ -63,7 +63,7 @@ icon {
     width: 20%;
     flex-direction: column;
     align-items: center;
-    overflow-y:scroll;
+    overflow-y: scroll;
 }
 
 .chat_ref__outer {
@@ -375,6 +375,7 @@ icon {
 .profile__outer {
     flex: 1;
     display: flex;
+    max-height: 350px;
 }
 
 .profile__inner {
@@ -483,18 +484,33 @@ icon {
 }
 
 .posts__space__scroll {
-    display: flex;
+    position: fixed;
+    width: 50%;
+    top: 500px;
+    bottom: 100px;
+    margin-left: 25%;
+    margin-right: 25%;
+    padding: 20px;
+    border-radius: 15px;
+    background-color: #DCDCDC;
+    overflow-y: scroll;
+}
 
-    justify-content: flex-start;
-    align-items: center;
-    max-width: 50%;
-
-    flex-direction: column;
-    align-items: center;
+.posts__space__scroll__without_profile {
+    position: fixed;
+    width: 50%;
+    top: 100px;
+    bottom: 100px;
+    margin-left: 25%;
+    margin-right: 25%;
+    padding: 20px;
+    border-radius: 15px;
+    background-color: #DCDCDC;
+    overflow-y: scroll;
 }
 
 .post {
-
+    display: flex;
 }
 
 .post__outer {
