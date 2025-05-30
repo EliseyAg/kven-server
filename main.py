@@ -279,7 +279,7 @@ def friendslist():
     return render_template("friendslist.html").format(friend_refs)
 
 
-@app.route('/post/<int:id>', methods=['POST', "GET"])
+@app.route('/watch/post=<int:id>', methods=['POST', "GET"])
 @login_required
 def post(id):
 

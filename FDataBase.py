@@ -192,3 +192,33 @@ class FDataBase:
             print("Ошибка получения данных из БД " + str(e))
 
         return False
+
+    def addPost(self, user_id, text):
+        try:
+            tm = math.floor(time.time())
+            self.__cur.execute("INSERT INTO posts VALUES(?, ?, ?, ?, ?)",
+                               (user_id, text, 0, 0, tm))
+            self.__db.commit()
+        except sqlite3.Error as e:
+            print("Ошибка добавления в БД: " + str(e))
+            return False
+
+        return True
+
+    def getPostsByUserId(self, user_id):
+        try:
+            self.__cur.execute(f"SELECT * FROM posts WHERE sender = '{user_id}'")
+            row = self.__cur.fetchone()
+            res = []
+            while row is not None:
+                res.append(row)
+                row = self.__cur.fetchone()
+            if not res:
+                print("Пост не найдено")
+                return False
+
+            return res
+        except sqlite3.Error as e:
+            print("Ошибка получения данных из БД " + str(e))
+
+        return False
