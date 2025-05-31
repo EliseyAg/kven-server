@@ -282,7 +282,7 @@ def friendslist():
 @app.route('/watch/post=<int:id>', methods=['POST', "GET"])
 @login_required
 def post(id):
-
+    
     return render_template("post.html")
 
 

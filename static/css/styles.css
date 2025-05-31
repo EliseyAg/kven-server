@@ -509,6 +509,50 @@ icon {
     overflow-y: scroll;
 }
 
+.new_post_button__outer {
+    display: flex;
+}
+
+.new_post_button__inner {
+    display: flex;
+    flex-direction: row;
+}
+
+#new_post_button__bubble {
+    display: flex;
+    color: #000080;
+    border-radius: 10px 10px;
+}
+
+#new_post_button__bubble li {
+    display: inline;
+    float: left;
+    padding: 20px;
+    width: 100%;
+}
+
+#new_post_button__bubble span {
+    font-size: 22px;
+    color: #FFFAFA;
+}
+
+#new_post_button__bubble a:hover {
+    position: relative;
+    padding: 20px;
+    margin-top: 10px;
+    margin-right: 10px;
+    margin-left: 10px;
+    bottom: 0;
+    height: 100px;
+    border-radius: 10px 10px;
+    background-color: #FFFAFA;
+}
+
+#new_post_button__bubble a:hover span {
+    font-size: 22px;
+    color: #000080;
+}
+
 .post {
     display: flex;
 }
