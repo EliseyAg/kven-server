@@ -20,7 +20,7 @@ RTL_MESSAGE = '''<div class="message_RTL"><div class="message__outer"><div class
 LTL_MESSAGE = '''<div class="message_LTL"><div class="message__outer"><div class="message__inner"><div class="message__spacer"></div><div class="message__actions"></div><div class="message__bubble__grey"><span>{0}</span></div></div><div class="message__avatar"></div></div></div>'''
 FRIEND_REF = '''<a class="friends_list_ref__outer" href="/{0}"><div class="friends_list_ref__outer"><div class="friends_list_ref__inner"><div class="universal_spacer"></div><div class="friends_list_ref__bubble"><div class="chat_ref_avatar"><icon><img class="icon" src="/static/gallery/icons/profile.png" width="100%"></icon></div><div class="chat_ref_name">{1}</div></div><div class="universal_spacer"></div></div></div></a>'''
 FRIEND_REF_CHAT = '''<a class="friends_list_ref__outer" href="/newchat/{0}"><div class="friends_list_ref__outer"><div class="friends_list_ref__inner"><div class="universal_spacer"></div><div class="friends_list_ref__bubble"><div class="chat_ref_avatar"><icon><img class="icon" src="/static/gallery/icons/profile.png" width="100%"></icon></div><div class="chat_ref_name">{1}</div></div><div class="universal_spacer"></div></div></div></a>'''
-POST = '''<div class="post"><div class="post__outer"><div class="post__inner"><div class="post__sender__outer"><div class="post__sender__inner"><div class="post__sender__bubble"><div class="post__sender"><span>{0}</span></div><div class="universal_spacer"></div><div class="post__time"><span>{1}</span></div><div class="vertical_line"></div><div class="post__date"><span>{2}</span></div></div></div></div><div class="universal_spacer"></div><div class="post__body__outer"><div class="post__body__inner"><div class="post__body__bubble"><span>{3}</span></div></div></div><div class="universal_spacer"></div><div class="post__footer__outer"><div class="post__footer__inner"><div class="post__footer__bubble"><div class="post__views__outer"><div class="post__views__inner"><icon><img src="/static/gallery/icons/views.png" width="100%"></icon><div class="post__views__text"><span>1k</span></div></div></div><div class="universal_spacer"></div><div class="post__commentaries__outer"><div class="post__commentaries__inner"><div class="post__commentaries__text"><span>1k</span></div><icon><img src="/static/gallery/icons/commentaries.png" width="100%"></icon></div></div></div></div></div></div></div></div>'''
+POST = '''<a class="post" href="/watch/post={0}"><div class="post"><div class="post__outer"><div class="post__inner"><div class="post__sender__outer"><div class="post__sender__inner"><div class="post__sender__bubble"><div class="post__sender"><span>{1}</span></div><div class="universal_spacer"></div><div class="post__time"><span>{2}</span></div><div class="vertical_line"></div><div class="post__date"><span>{3}</span></div></div></div></div><div class="universal_spacer"></div><div class="post__body__outer"><div class="post__body__inner"><div class="post__body__bubble"><span>{4}</span></div></div></div><div class="universal_spacer"></div><div class="post__footer__outer"><div class="post__footer__inner"><div class="post__footer__bubble"><div class="post__views__outer"><div class="post__views__inner"><icon><img src="/static/gallery/icons/views.png" width="100%"></icon><div class="post__views__text"><span>1k</span></div></div></div><div class="universal_spacer"></div><div class="post__commentaries__outer"><div class="post__commentaries__inner"><div class="post__commentaries__text"><span>1k</span></div><icon><img src="/static/gallery/icons/commentaries.png" width="100%"></icon></div></div></div></div></div></div></div></div></a>'''
 
 
 app = Flask(__name__)
@@ -284,7 +284,22 @@ def friendslist():
 @app.route('/watch/post=<int:id>', methods=['POST', "GET"])
 @login_required
 def post(id):
-    return render_template("post.html")
+    if current_user:
+        _post = dbase.getPostById(id)
+        if _post:
+            all = []
+            post_time = _post['time']
+            _post_time = time.localtime(post_time)
+            _sender = dbase.getUserById(_post['sender'])
+            post = POST.format(_post['id'], _sender['username'], time.strftime('%d.%m.%Y', _post_time), time.strftime('%H:%M', _post_time), _post['text'])
+
+            all.append(_sender['username'])
+            all.append(time.strftime('%d.%m.%Y %H:%M', _post_time))
+            all.append(post)
+
+            return render_template("post.html").format(*all)
+
+    return redirect("/")
 
 
 @app.route('/new_post', methods=['POST', "GET"])
@@ -324,7 +339,7 @@ def profile():
                 post_time = _post['time']
                 _post_time = time.localtime(post_time)
 
-                _posts_list = POST.format(current_user.get_name(), time.strftime('%d.%m.%Y', _post_time), time.strftime('%H:%M', _post_time), _post['text']) + _posts_list
+                _posts_list = POST.format(_post['id'], current_user.get_name(), time.strftime('%d.%m.%Y', _post_time), time.strftime('%H:%M', _post_time), _post['text']) + _posts_list
 
     all.append(_posts_list)
 
@@ -344,7 +359,7 @@ def user(username):
                     post_time = _post['time']
                     _post_time = time.localtime(post_time)
 
-                    _posts_list = POST.format(_user['username'], time.strftime('%d.%m.%Y', _post_time),
+                    _posts_list = POST.format(_post['id'], _user['username'], time.strftime('%d.%m.%Y', _post_time),
                                               time.strftime('%H:%M', _post_time), _post['text']) + _posts_list
 
     all.append(_posts_list)

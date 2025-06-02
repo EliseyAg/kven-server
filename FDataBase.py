@@ -222,3 +222,17 @@ class FDataBase:
             print("Ошибка получения данных из БД " + str(e))
 
         return False
+
+    def getPostById(self, post_id):
+        try:
+            self.__cur.execute(f"SELECT * FROM posts WHERE id = '{post_id}'")
+            res = self.__cur.fetchone()
+            if not res:
+                print("Пост не найдено")
+                return False
+
+            return res
+        except sqlite3.Error as e:
+            print("Ошибка получения данных из БД " + str(e))
+
+        return False
