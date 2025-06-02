@@ -313,25 +313,42 @@ def logout():
 
 
 @app.route('/profile')
+@login_required
 def profile():
     all = []
     _posts_list = ""
     if current_user:
         _posts = dbase.getPostsByUserId(current_user.get_id())
-        for _post in _posts:
-            post_time = _post['time']
-            _post_time = time.localtime(post_time)
+        if _posts:
+            for _post in _posts:
+                post_time = _post['time']
+                _post_time = time.localtime(post_time)
 
-            _posts_list = POST.format(current_user.get_name(), time.strftime('%d.%m.%Y', _post_time), time.strftime('%H:%M', _post_time), _post['text']) + _posts_list
+                _posts_list = POST.format(current_user.get_name(), time.strftime('%d.%m.%Y', _post_time), time.strftime('%H:%M', _post_time), _post['text']) + _posts_list
 
     all.append(_posts_list)
 
     return render_template("profile.html").format(*all)
 
 
-@app.route('/user/<string:name>/<int:id>')
-def user(name, id):
-    return "User page: " + name + " - " + str(id)
+@app.route('/user/name=<string:username>')
+def user(username):
+    all = []
+    _posts_list = ""
+    if current_user:
+        _user = dbase.getUserByName(username)
+        if _user:
+            _posts = dbase.getPostsByUserId(_user['id'])
+            if _posts:
+                for _post in _posts:
+                    post_time = _post['time']
+                    _post_time = time.localtime(post_time)
+
+                    _posts_list = POST.format(_user['username'], time.strftime('%d.%m.%Y', _post_time),
+                                              time.strftime('%H:%M', _post_time), _post['text']) + _posts_list
+
+    all.append(_posts_list)
+    return render_template("profile.html").format(*all)
 
 
 if __name__ == "__main__":
