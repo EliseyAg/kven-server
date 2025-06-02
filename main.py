@@ -4,6 +4,7 @@ from flask_login import LoginManager, login_user, login_required, logout_user, c
 from werkzeug.security import generate_password_hash, check_password_hash
 import sqlite3
 import os
+import time
 
 from FDataBase import FDataBase
 from UserLogin import UserLogin
@@ -19,6 +20,7 @@ RTL_MESSAGE = '''<div class="message_RTL"><div class="message__outer"><div class
 LTL_MESSAGE = '''<div class="message_LTL"><div class="message__outer"><div class="message__inner"><div class="message__spacer"></div><div class="message__actions"></div><div class="message__bubble__grey"><span>{0}</span></div></div><div class="message__avatar"></div></div></div>'''
 FRIEND_REF = '''<a class="friends_list_ref__outer" href="/{0}"><div class="friends_list_ref__outer"><div class="friends_list_ref__inner"><div class="universal_spacer"></div><div class="friends_list_ref__bubble"><div class="chat_ref_avatar"><icon><img class="icon" src="/static/gallery/icons/profile.png" width="100%"></icon></div><div class="chat_ref_name">{1}</div></div><div class="universal_spacer"></div></div></div></a>'''
 FRIEND_REF_CHAT = '''<a class="friends_list_ref__outer" href="/newchat/{0}"><div class="friends_list_ref__outer"><div class="friends_list_ref__inner"><div class="universal_spacer"></div><div class="friends_list_ref__bubble"><div class="chat_ref_avatar"><icon><img class="icon" src="/static/gallery/icons/profile.png" width="100%"></icon></div><div class="chat_ref_name">{1}</div></div><div class="universal_spacer"></div></div></div></a>'''
+POST = '''<div class="post"><div class="post__outer"><div class="post__inner"><div class="post__sender__outer"><div class="post__sender__inner"><div class="post__sender__bubble"><div class="post__sender"><span>{0}</span></div><div class="universal_spacer"></div><div class="post__time"><span>{1}</span></div><div class="vertical_line"></div><div class="post__date"><span>{2}</span></div></div></div></div><div class="universal_spacer"></div><div class="post__body__outer"><div class="post__body__inner"><div class="post__body__bubble"><span>{3}</span></div></div></div><div class="universal_spacer"></div><div class="post__footer__outer"><div class="post__footer__inner"><div class="post__footer__bubble"><div class="post__views__outer"><div class="post__views__inner"><icon><img src="/static/gallery/icons/views.png" width="100%"></icon><div class="post__views__text"><span>1k</span></div></div></div><div class="universal_spacer"></div><div class="post__commentaries__outer"><div class="post__commentaries__inner"><div class="post__commentaries__text"><span>1k</span></div><icon><img src="/static/gallery/icons/commentaries.png" width="100%"></icon></div></div></div></div></div></div></div></div>'''
 
 
 app = Flask(__name__)
@@ -282,8 +284,19 @@ def friendslist():
 @app.route('/watch/post=<int:id>', methods=['POST', "GET"])
 @login_required
 def post(id):
-    
     return render_template("post.html")
+
+
+@app.route('/new_post', methods=['POST', "GET"])
+@login_required
+def new_post():
+    if request.method == "POST":
+        if current_user:
+            post_text = request.form['text']
+            dbase.addPost(current_user.get_id(), post_text)
+            return redirect("/profile")
+
+    return render_template("new_post.html")
 
 
 @app.route('/about')
@@ -301,7 +314,19 @@ def logout():
 
 @app.route('/profile')
 def profile():
-    return render_template("profile.html")
+    all = []
+    _posts_list = ""
+    if current_user:
+        _posts = dbase.getPostsByUserId(current_user.get_id())
+        for _post in _posts:
+            post_time = _post['time']
+            _post_time = time.localtime(post_time)
+
+            _posts_list = POST.format(current_user.get_name(), time.strftime('%d.%m.%Y', _post_time), time.strftime('%H:%M', _post_time), _post['text']) + _posts_list
+
+    all.append(_posts_list)
+
+    return render_template("profile.html").format(*all)
 
 
 @app.route('/user/<string:name>/<int:id>')

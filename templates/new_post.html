@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Новый пост
+{% endblock %}
+
+{% block body %}
+<form action="new_post" method="POST" class="form-contact">
+    <span><input type="text" name="text" value="" requered></span>
+    <span><input type="submit" value="Подтвердить"></span>
+</form>
+{% endblock %}

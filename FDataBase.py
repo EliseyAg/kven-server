@@ -196,7 +196,7 @@ class FDataBase:
     def addPost(self, user_id, text):
         try:
             tm = math.floor(time.time())
-            self.__cur.execute("INSERT INTO posts VALUES(?, ?, ?, ?, ?)",
+            self.__cur.execute("INSERT INTO posts VALUES(NULL, ?, ?, ?, ?, ?)",
                                (user_id, text, 0, 0, tm))
             self.__db.commit()
         except sqlite3.Error as e:
