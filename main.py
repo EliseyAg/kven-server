@@ -21,6 +21,7 @@ LTL_MESSAGE = '''<div class="message_LTL"><div class="message__outer"><div class
 FRIEND_REF = '''<a class="friends_list_ref__outer" href="/{0}"><div class="friends_list_ref__outer"><div class="friends_list_ref__inner"><div class="universal_spacer"></div><div class="friends_list_ref__bubble"><div class="chat_ref_avatar"><icon><img class="icon" src="/static/gallery/icons/profile.png" width="100%"></icon></div><div class="chat_ref_name">{1}</div></div><div class="universal_spacer"></div></div></div></a>'''
 FRIEND_REF_CHAT = '''<a class="friends_list_ref__outer" href="/newchat/{0}"><div class="friends_list_ref__outer"><div class="friends_list_ref__inner"><div class="universal_spacer"></div><div class="friends_list_ref__bubble"><div class="chat_ref_avatar"><icon><img class="icon" src="/static/gallery/icons/profile.png" width="100%"></icon></div><div class="chat_ref_name">{1}</div></div><div class="universal_spacer"></div></div></div></a>'''
 POST = '''<a class="post" href="/watch/post={0}"><div class="post"><div class="post__outer"><div class="post__inner"><div class="post__sender__outer"><div class="post__sender__inner"><div class="post__sender__bubble"><div class="post__sender"><span>{1}</span></div><div class="universal_spacer"></div><div class="post__time"><span>{2}</span></div><div class="vertical_line"></div><div class="post__date"><span>{3}</span></div></div></div></div><div class="universal_spacer"></div><div class="post__body__outer"><div class="post__body__inner"><div class="post__body__bubble"><span>{4}</span></div></div></div><div class="universal_spacer"></div><div class="post__footer__outer"><div class="post__footer__inner"><div class="post__footer__bubble"><div class="post__views__outer"><div class="post__views__inner"><icon><img src="/static/gallery/icons/views.png" width="100%"></icon><div class="post__views__text"><span>1k</span></div></div></div><div class="universal_spacer"></div><div class="post__commentaries__outer"><div class="post__commentaries__inner"><div class="post__commentaries__text"><span>1k</span></div><icon><img src="/static/gallery/icons/commentaries.png" width="100%"></icon></div></div></div></div></div></div></div></div></a>'''
+POST_WITHOUT_REF = '''<div class="post"><div class="post__outer"><div class="post__inner"><div class="post__sender__outer"><div class="post__sender__inner"><div class="post__sender__bubble"><a class="post__sender" href="/user/name={0}"><div class="post__sender"><span>{1}</span></div></a><div class="universal_spacer"></div><div class="post__time"><span>{2}</span></div><div class="vertical_line"></div><div class="post__date"><span>{3}</span></div></div></div></div><div class="universal_spacer"></div><div class="post__body__outer"><div class="post__body__inner"><div class="post__body__bubble"><span>{4}</span></div></div></div><div class="universal_spacer"></div><div class="post__footer__outer"><div class="post__footer__inner"><div class="post__footer__bubble"><div class="post__views__outer"><div class="post__views__inner"><icon><img src="/static/gallery/icons/views.png" width="100%"></icon><div class="post__views__text"><span>1k</span></div></div></div><div class="universal_spacer"></div><div class="post__commentaries__outer"><div class="post__commentaries__inner"><div class="post__commentaries__text"><span>1k</span></div><icon><img src="/static/gallery/icons/commentaries.png" width="100%"></icon></div></div></div></div></div></div></div></div>'''
 
 
 app = Flask(__name__)
@@ -291,7 +292,7 @@ def post(id):
             post_time = _post['time']
             _post_time = time.localtime(post_time)
             _sender = dbase.getUserById(_post['sender'])
-            post = POST.format(_post['id'], _sender['username'], time.strftime('%d.%m.%Y', _post_time), time.strftime('%H:%M', _post_time), _post['text'])
+            post = POST_WITHOUT_REF.format(_sender['username'], _sender['username'], time.strftime('%d.%m.%Y', _post_time), time.strftime('%H:%M', _post_time), _post['text'])
 
             all.append(_sender['username'])
             all.append(time.strftime('%d.%m.%Y %H:%M', _post_time))
@@ -353,6 +354,8 @@ def user(username):
     if current_user:
         _user = dbase.getUserByName(username)
         if _user:
+            if int(_user['id']) == int(current_user.get_id()):
+                return redirect("/profile")
             _posts = dbase.getPostsByUserId(_user['id'])
             if _posts:
                 for _post in _posts:
