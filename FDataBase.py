@@ -205,6 +205,18 @@ class FDataBase:
 
         return True
 
+    def addViewToPost(self, post_id):
+        _post = self.getPostById(post_id)
+
+        try:
+            self.__cur.execute(f"UPDATE posts SET views = '{int(_post['views']) + 1}' WHERE id = '{post_id}'")
+            self.__db.commit()
+
+        except sqlite3.Error as e:
+            print("Ошибка получения данных из БД " + str(e))
+
+        return True
+
     def getPostsByUserId(self, user_id):
         try:
             self.__cur.execute(f"SELECT * FROM posts WHERE sender = '{user_id}'")
@@ -214,7 +226,7 @@ class FDataBase:
                 res.append(row)
                 row = self.__cur.fetchone()
             if not res:
-                print("Пост не найдено")
+                print("Пост не найден")
                 return False
 
             return res

@@ -289,6 +289,7 @@ def post(id):
         _post = dbase.getPostById(id)
         if _post:
             all = []
+            dbase.addViewToPost(id)
             post_time = _post['time']
             _post_time = time.localtime(post_time)
             _sender = dbase.getUserById(_post['sender'])
