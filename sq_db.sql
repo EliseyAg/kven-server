@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS posts (
     id integer PRIMARY KEY AUTOINCREMENT,
     sender integer NOT NULL,
     text text NOT NULL,
-    views integer NOT NULL,
-    likes integer NOT NULL,
+    views string NOT NULL,
+    likes string NOT NULL,
     time integer NOT NULL
 );

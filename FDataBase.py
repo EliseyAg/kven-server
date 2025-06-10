@@ -197,7 +197,7 @@ class FDataBase:
         try:
             tm = math.floor(time.time())
             self.__cur.execute("INSERT INTO posts VALUES(NULL, ?, ?, ?, ?, ?)",
-                               (user_id, text, 0, 0, tm))
+                               (user_id, text, "[]", "[]", tm))
             self.__db.commit()
         except sqlite3.Error as e:
             print("Ошибка добавления в БД: " + str(e))
@@ -205,15 +205,33 @@ class FDataBase:
 
         return True
 
-    def addViewToPost(self, post_id):
-        _post = self.getPostById(post_id)
-
+    def addViewToPost(self, post_id, user_id):
         try:
-            self.__cur.execute(f"UPDATE posts SET views = '{int(_post['views']) + 1}' WHERE id = '{post_id}'")
-            self.__db.commit()
+            self.__cur.execute(f"SELECT * FROM posts WHERE id = '{post_id}'")
+            res = self.__cur.fetchone()
+            if not res:
+                print("Пост не найден")
+                return False
+
+            _views_array = list((str(res['views'])[1:-1]).split(', '))
+            if _views_array == ['']:
+                views_array = []
+            else:
+                views_array = list(map(int, _views_array))
+
+            views_array.append(user_id)
 
         except sqlite3.Error as e:
             print("Ошибка получения данных из БД " + str(e))
+            return False
+
+        try:
+            print(views_array)
+            self.__cur.execute(f"UPDATE posts SET views = '{views_array}' WHERE id = '{post_id}'")
+            self.__db.commit()
+
+        except sqlite3.Error as e:
+            print("Ошибка обновления данных в БД " + str(e))
 
         return True
 
@@ -240,7 +258,7 @@ class FDataBase:
             self.__cur.execute(f"SELECT * FROM posts WHERE id = '{post_id}'")
             res = self.__cur.fetchone()
             if not res:
-                print("Пост не найдено")
+                print("Пост не найден")
                 return False
 
             return res

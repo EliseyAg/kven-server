@@ -1,5 +1,4 @@
-from flask import Flask, flash, render_template, request, redirect, g, url_for
-from flask_sqlalchemy import SQLAlchemy
+from flask import Flask, render_template, request, g, flash, abort, redirect, url_for
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 import sqlite3
@@ -289,7 +288,7 @@ def post(id):
         _post = dbase.getPostById(id)
         if _post:
             all = []
-            dbase.addViewToPost(id)
+            dbase.addViewToPost(id, int(current_user.get_id()))
             post_time = _post['time']
             _post_time = time.localtime(post_time)
             _sender = dbase.getUserById(_post['sender'])
