@@ -219,7 +219,8 @@ class FDataBase:
             else:
                 views_array = list(map(int, _views_array))
 
-            views_array.append(user_id)
+            if not(user_id in views_array):
+                views_array.append(user_id)
 
         except sqlite3.Error as e:
             print("Ошибка получения данных из БД " + str(e))
