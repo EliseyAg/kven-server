@@ -296,6 +296,9 @@ def post(id):
             else:
                 _views_count = len(list(map(int, _views_list)))
 
+            if _views_count >= 1000:
+                _views_count = str(str(_views_count // 1000) + "k")
+
             post_time = _post['time']
             _post_time = time.localtime(post_time)
             _sender = dbase.getUserById(_post['sender'])
@@ -352,6 +355,9 @@ def profile():
                     _views_count = 0
                 else:
                     _views_count = len(list(map(int, _views_list)))
+
+                if _views_count >= 1000:
+                    _views_count = str(str(_views_count // 1000) + "k")
 
                 _posts_list = POST.format(_post['id'], current_user.get_name(), time.strftime('%d.%m.%Y', _post_time), time.strftime('%H:%M', _post_time), _post['text'], _views_count) + _posts_list
 
