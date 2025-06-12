@@ -25,6 +25,7 @@ CREATE TABLE IF NOT EXISTS messages (
 
 CREATE TABLE IF NOT EXISTS commentary (
     id integer PRIMARY KEY AUTOINCREMENT,
+    post_type string NOT NULL,
     post_id text NOT NULL,
     reply_id integer NOT NULL,
     sender text NOT NULL,
