@@ -78,6 +78,11 @@ def close_db(error):
 
 @app.route('/')
 def index():
+    return redirect("/news")
+
+
+@app.route('/news')
+def news():
     return render_template("index.html")
 
 
