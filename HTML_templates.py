@@ -191,6 +191,10 @@ POST_WITHOUT_REF =  '<div class="post">' \
                                         '</div>' \
                                     '</div>' \
                                 '</div>' \
+                                '<div class="new_commentary__outer">' \
+                                    '<div class="new_commentary__inner">' \
+                                    '</div>' \
+                                '</div>' \
                             '</div>' \
                         '</div>' \
                     '</div>'

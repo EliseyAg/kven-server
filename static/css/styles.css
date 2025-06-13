@@ -755,6 +755,17 @@ icon {
     font-weight: bold;
 }
 
+.new_commentary__outer {
+    display: flex;
+}
+
+.new_commentary__inner {
+    flex: 1;
+    display: flex;
+
+    margin: 5px;
+}
+
 .universal_spacer {
     flex: 1;
 }
