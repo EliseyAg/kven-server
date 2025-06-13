@@ -193,7 +193,7 @@ POST_WITHOUT_REF =  '<div class="post">' \
                                 '</div>' \
                                 '<div class="new_commentary__outer">' \
                                     '<div class="new_commentary__inner">' \
-                                        '<form action="new_commentary" method="POST" class="form-contact">' \
+                                        '<form action="" method="POST" class="form-contact">' \
                                             '<span><input type="text" name="text" value="" requered></span>' \
                                             '<span><input type="submit" value="Подтвердить"></span>' \
                                         '</form>' \

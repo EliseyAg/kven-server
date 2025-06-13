@@ -26,9 +26,10 @@ CREATE TABLE IF NOT EXISTS messages (
 CREATE TABLE IF NOT EXISTS commentary (
     id integer PRIMARY KEY AUTOINCREMENT,
     post_type string NOT NULL,
-    post_id text NOT NULL,
+    post_id integer NOT NULL,
     reply_id integer NOT NULL,
-    sender text NOT NULL,
+    sender string NOT NULL,
+    text string NOT NULL,
     likes integer NOT NULL,
     time integer NOT NULL
 );

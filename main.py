@@ -283,6 +283,11 @@ def friendslist():
 @app.route('/watch/post=<int:id>', methods=['POST', "GET"])
 @login_required
 def post(id):
+    if request.method == "POST":
+        if current_user:
+            commentary_text = request.form['text']
+            dbase.AddCommentaryToPost("POST", id, "", current_user.get_id(), commentary_text)
+
     if current_user:
         _post = dbase.getPostById(id)
         if _post:
@@ -380,8 +385,16 @@ def user(username):
                     post_time = _post['time']
                     _post_time = time.localtime(post_time)
 
-                    _posts_list = POST.format(_post['id'], _user['username'], time.strftime('%d.%m.%Y', _post_time),
-                                              time.strftime('%H:%M', _post_time), _post['text']) + _posts_list
+                    _views_list = list((str(_post['views'])[1:-1]).split(', '))
+                    if _views_list == ['']:
+                        _views_count = 0
+                    else:
+                        _views_count = len(list(map(int, _views_list)))
+
+                    if _views_count >= 1000:
+                        _views_count = str(str(_views_count // 1000) + "k")
+
+                    _posts_list = POST.format(_post['id'], _user['username'], time.strftime('%d.%m.%Y', _post_time), time.strftime('%H:%M', _post_time), _post['text'], _views_count) + _posts_list
 
     all.append(_posts_list)
     return render_template("profile.html").format(*all)
