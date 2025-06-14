@@ -309,11 +309,15 @@ def post(id):
             _commentary = dbase.getCommentariesByPostId(id)
 
             commentary = ""
+            _commentary_len = 0
 
-            for _comment in _commentary:
-                commentary += COMMENTARY.format(dbase.getUserById(_comment['sender'])['username'], _comment['text'])
+            if _commentary:
+                for _comment in _commentary:
+                    commentary += COMMENTARY.format(dbase.getUserById(_comment['sender'])['username'], _comment['text'])
 
-            post = POST_WITHOUT_REF.format(_sender['username'], _sender['username'], time.strftime('%d.%m.%Y', _post_time), time.strftime('%H:%M', _post_time), _post['text'], _views_count, len(_commentary), commentary)
+                _commentary_len = len(_commentary)
+
+            post = POST_WITHOUT_REF.format(_sender['username'], _sender['username'], time.strftime('%d.%m.%Y', _post_time), time.strftime('%H:%M', _post_time), _post['text'], _views_count, _commentary_len, commentary)
 
             all.append(_sender['username'])
             all.append(time.strftime('%d.%m.%Y %H:%M', _post_time))
@@ -355,6 +359,7 @@ def profile():
     all = []
     _posts_list = ""
     if current_user:
+        all.append(current_user.get_name())
         _posts = dbase.getPostsByUserId(current_user.get_id())
         if _posts:
             for _post in _posts:
@@ -382,6 +387,7 @@ def user(username):
     all = []
     _posts_list = ""
     if current_user:
+        all.append(username)
         _user = dbase.getUserByName(username)
         if _user:
             if int(_user['id']) == int(current_user.get_id()):

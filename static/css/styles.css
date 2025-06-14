@@ -560,6 +560,8 @@ icon {
 
 .post {
     display: flex;
+
+    min-width: 100%;
 }
 
 .post__outer {
