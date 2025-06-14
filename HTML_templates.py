@@ -145,7 +145,9 @@ POST_WITHOUT_REF =  '<div class="post">' \
                                     '<div class="post__sender__inner">' \
                                         '<div class="post__sender__bubble">' \
                                             '<div class="post__sender">' \
-                                                '<span>{1}</span>' \
+                                                '<a href="/user/name={0}">' \
+                                                    '<span>{1}</span>' \
+                                                '</a>' \
                                             '</div>' \
                                             '<div class="universal_spacer"></div>' \
                                             '<div class="post__time">' \
@@ -183,7 +185,7 @@ POST_WITHOUT_REF =  '<div class="post">' \
                                             '<div class="post__commentaries__outer">' \
                                                 '<div class="post__commentaries__inner">' \
                                                     '<div class="post__commentaries__text">' \
-                                                        '<span>1k</span>' \
+                                                        '<span>{6}</span>' \
                                                     '</div>' \
                                                     '<icon><img src="/static/gallery/icons/commentaries.png" width="100%"></icon>' \
                                                 '</div>' \
@@ -202,7 +204,7 @@ POST_WITHOUT_REF =  '<div class="post">' \
                                 '<div class="commentary_space__outer">' \
                                     '<div class="universal_spacer"></div>' \
                                     '<div class="commentary_space">' \
-                                        '{6}' \
+                                        '{7}' \
                                     '</div>' \
                                     '<div class="universal_spacer"></div>' \
                                 '</div>' \
@@ -213,7 +215,14 @@ POST_WITHOUT_REF =  '<div class="post">' \
 COMMENTARY =    '<div class="commentary__outer">' \
                     '<div class="commentary__inner">' \
                         '<div class="commentary__bubble">' \
-                            '{0}' \
+                            '<a href="/user/name={0}">' \
+                                '<div class="commentary__sender">' \
+                                    '<span>{0}</span>' \
+                                '</div>' \
+                            '</a>' \
+                            '<div class="">' \
+                                '{1}' \
+                            '</div>' \
                         '</div>' \
                     '</div>' \
                 '</div>'

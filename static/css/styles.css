@@ -793,12 +793,24 @@ icon {
 .commentary__bubble {
     flex: 1;
     display: flex;
+    flex-direction: column;
 
     background-color: #000080;
     border-radius: 15px;
     padding: 10px;
 
     color: #DCDCDC;
+}
+
+.commentary__sender {
+    display: flex;
+    margin-bottom: 5px;
+}
+
+.commentary__sender span {
+    display: flex;
+    color: #DCDCDC;
+    font-weight: bold;
 }
 
 .universal_spacer {

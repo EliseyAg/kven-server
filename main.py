@@ -311,9 +311,9 @@ def post(id):
             commentary = ""
 
             for _comment in _commentary:
-                commentary += COMMENTARY.format(_comment['text'])
+                commentary += COMMENTARY.format(dbase.getUserById(_comment['sender'])['username'], _comment['text'])
 
-            post = POST_WITHOUT_REF.format(_sender['username'], _sender['username'], time.strftime('%d.%m.%Y', _post_time), time.strftime('%H:%M', _post_time), _post['text'], _views_count, commentary)
+            post = POST_WITHOUT_REF.format(_sender['username'], _sender['username'], time.strftime('%d.%m.%Y', _post_time), time.strftime('%H:%M', _post_time), _post['text'], _views_count, len(_commentary), commentary)
 
             all.append(_sender['username'])
             all.append(time.strftime('%d.%m.%Y %H:%M', _post_time))
