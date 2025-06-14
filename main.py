@@ -311,7 +311,7 @@ def post(id):
             commentary = ""
 
             for _comment in _commentary:
-                commentary += _comment['text']
+                commentary += COMMENTARY.format(_comment['text'])
 
             post = POST_WITHOUT_REF.format(_sender['username'], _sender['username'], time.strftime('%d.%m.%Y', _post_time), time.strftime('%H:%M', _post_time), _post['text'], _views_count, commentary)
 

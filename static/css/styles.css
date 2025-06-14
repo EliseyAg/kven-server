@@ -766,6 +766,16 @@ icon {
     margin: 5px;
 }
 
+.commentary_space {
+    display: flex;
+
+    flex-direction: column;
+}
+
+.commentary__outer {
+    display: flex;
+}
+
 .universal_spacer {
     flex: 1;
 }
