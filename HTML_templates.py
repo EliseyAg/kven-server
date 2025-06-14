@@ -197,15 +197,23 @@ POST_WITHOUT_REF =  '<div class="post">' \
                                             '<span><input type="text" name="text" value="" requered></span>' \
                                             '<span><input type="submit" value="Подтвердить"></span>' \
                                         '</form>' \
-                                        '<div class="commentary_space">' \
-                                            '{6}' \
-                                        '</div>' \
                                     '</div>' \
+                                '</div>' \
+                                '<div class="commentary_space__outer">' \
+                                    '<div class="universal_spacer"></div>' \
+                                    '<div class="commentary_space">' \
+                                        '{6}' \
+                                    '</div>' \
+                                    '<div class="universal_spacer"></div>' \
                                 '</div>' \
                             '</div>' \
                         '</div>' \
                     '</div>'
 
 COMMENTARY =    '<div class="commentary__outer">' \
-                    '{0}' \
+                    '<div class="commentary__inner">' \
+                        '<div class="commentary__bubble">' \
+                            '{0}' \
+                        '</div>' \
+                    '</div>' \
                 '</div>'

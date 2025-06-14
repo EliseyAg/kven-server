@@ -766,7 +766,14 @@ icon {
     margin: 5px;
 }
 
+.commentary_space__outer {
+    display: flex;
+
+    flex-direction: row;
+}
+
 .commentary_space {
+    flex: 10;
     display: flex;
 
     flex-direction: column;
@@ -774,6 +781,24 @@ icon {
 
 .commentary__outer {
     display: flex;
+}
+
+.commentary__inner {
+    flex: 1;
+    display: flex;
+
+    margin: 5px;
+}
+
+.commentary__bubble {
+    flex: 1;
+    display: flex;
+
+    background-color: #000080;
+    border-radius: 15px;
+    padding: 10px;
+
+    color: #DCDCDC;
 }
 
 .universal_spacer {
