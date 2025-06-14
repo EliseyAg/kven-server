@@ -197,6 +197,9 @@ POST_WITHOUT_REF =  '<div class="post">' \
                                             '<span><input type="text" name="text" value="" requered></span>' \
                                             '<span><input type="submit" value="Подтвердить"></span>' \
                                         '</form>' \
+                                        '<div class="commentary_space">' \
+                                            '{6}' \
+                                        '</div>' \
                                     '</div>' \
                                 '</div>' \
                             '</div>' \

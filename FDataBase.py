@@ -268,12 +268,32 @@ class FDataBase:
 
         return False
 
-    def AddCommentaryToPost(self, type, id, reply, sender, text):
+    def addCommentaryToPost(self, type, id, reply, sender, text):
         try:
             tm = math.floor(time.time())
             self.__cur.execute("INSERT INTO commentary VALUES(NULL, ?, ?, ?, ?, ?, ?, ?)", (type, id, reply, sender, text, "[]", tm))
             self.__db.commit()
+
+            return True
         except sqlite3.Error as e:
             print("Ошибка добавления данных в БД " + str(e))
+
+        return False
+
+    def getCommentariesByPostId(self, post_id):
+        try:
+            self.__cur.execute(f"SELECT * FROM commentary WHERE post_id = '{post_id}'")
+            row = self.__cur.fetchone()
+            res = []
+            while row is not None:
+                res.append(row)
+                row = self.__cur.fetchone()
+            if not res:
+                print("Пост не найден")
+                return False
+
+            return res
+        except sqlite3.Error as e:
+            print("Ошибка получения данных из БД " + str(e))
 
         return False

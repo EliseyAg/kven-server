@@ -273,7 +273,6 @@ def friendslist():
         friends = dbase.getUserFriends(current_user.get_id())
         if friends:
             for friend in friends:
-                print("friend_id = " + str(friend))
                 _friend_user_name = str(dbase.getUserById(friend)['username'])
                 friend_refs += FRIEND_REF.format(_friend_user_name, _friend_user_name)
 
@@ -286,7 +285,7 @@ def post(id):
     if request.method == "POST":
         if current_user:
             commentary_text = request.form['text']
-            dbase.AddCommentaryToPost("POST", id, "", current_user.get_id(), commentary_text)
+            dbase.addCommentaryToPost("POST", id, "", current_user.get_id(), commentary_text)
 
     if current_user:
         _post = dbase.getPostById(id)
@@ -306,7 +305,15 @@ def post(id):
             post_time = _post['time']
             _post_time = time.localtime(post_time)
             _sender = dbase.getUserById(_post['sender'])
-            post = POST_WITHOUT_REF.format(_sender['username'], _sender['username'], time.strftime('%d.%m.%Y', _post_time), time.strftime('%H:%M', _post_time), _post['text'], _views_count)
+
+            _commentary = dbase.getCommentariesByPostId(id)
+
+            commentary = ""
+
+            for _comment in _commentary:
+                commentary += _comment['text']
+
+            post = POST_WITHOUT_REF.format(_sender['username'], _sender['username'], time.strftime('%d.%m.%Y', _post_time), time.strftime('%H:%M', _post_time), _post['text'], _views_count, commentary)
 
             all.append(_sender['username'])
             all.append(time.strftime('%d.%m.%Y %H:%M', _post_time))
