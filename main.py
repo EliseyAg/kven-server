@@ -77,7 +77,37 @@ def index():
 
 @app.route('/news')
 def news():
-    return render_template("index.html")
+    all = []
+    _posts = dbase.getAllPosts()
+    posts = ""
+
+    if _posts:
+        for _post in _posts:
+            _user = dbase.getUserById(_post['sender'])
+
+            post_time = _post['time']
+            _post_time = time.localtime(post_time)
+
+            _views_list = list((str(_post['views'])[1:-1]).split(', '))
+            if _views_list == ['']:
+                _views_count = 0
+            else:
+                _views_count = len(list(map(int, _views_list)))
+
+            if _views_count >= 1000:
+                _views_count = str(str(_views_count // 1000) + "k")
+
+            _commentary = dbase.getCommentariesByPostId(_post['id'])
+            _commentary_len = 0
+
+            if _commentary:
+                _commentary_len = len(_commentary)
+
+            posts = POST.format(_post['id'], _user['username'], time.strftime('%d.%m.%Y', _post_time), time.strftime('%H:%M', _post_time), _post['text'], _views_count, _commentary_len) + posts
+
+    all.append(posts)
+
+    return render_template("index.html").format(*all)
 
 
 @app.route('/login', methods=['POST', "GET"])

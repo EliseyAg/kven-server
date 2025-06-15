@@ -268,6 +268,21 @@ class FDataBase:
 
         return False
 
+    def getAllPosts(self):
+        try:
+            self.__cur.execute(f"SELECT * FROM posts")
+            row = self.__cur.fetchone()
+            res = []
+            while row is not None:
+                res.append(row)
+                row = self.__cur.fetchone()
+
+            return res
+        except sqlite3.Error as e:
+            print("Ошибка получения данных из БД " + str(e))
+
+        return False
+
     def addCommentaryToPost(self, type, id, reply, sender, text):
         try:
             tm = math.floor(time.time())
