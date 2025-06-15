@@ -375,7 +375,13 @@ def profile():
                 if _views_count >= 1000:
                     _views_count = str(str(_views_count // 1000) + "k")
 
-                _posts_list = POST.format(_post['id'], current_user.get_name(), time.strftime('%d.%m.%Y', _post_time), time.strftime('%H:%M', _post_time), _post['text'], _views_count) + _posts_list
+                _commentary = dbase.getCommentariesByPostId(_post['id'])
+                _commentary_len = 0
+
+                if _commentary:
+                    _commentary_len = len(_commentary)
+
+                _posts_list = POST.format(_post['id'], current_user.get_name(), time.strftime('%d.%m.%Y', _post_time), time.strftime('%H:%M', _post_time), _post['text'], _views_count, _commentary_len) + _posts_list
 
     all.append(_posts_list)
 
@@ -407,7 +413,13 @@ def user(username):
                     if _views_count >= 1000:
                         _views_count = str(str(_views_count // 1000) + "k")
 
-                    _posts_list = POST.format(_post['id'], _user['username'], time.strftime('%d.%m.%Y', _post_time), time.strftime('%H:%M', _post_time), _post['text'], _views_count) + _posts_list
+                    _commentary = dbase.getCommentariesByPostId(_post['id'])
+                    _commentary_len = 0
+
+                    if _commentary:
+                        _commentary_len = len(_commentary)
+
+                    _posts_list = POST.format(_post['id'], _user['username'], time.strftime('%d.%m.%Y', _post_time), time.strftime('%H:%M', _post_time), _post['text'], _views_count, _commentary_len) + _posts_list
 
     all.append(_posts_list)
     return render_template("profile.html").format(*all)

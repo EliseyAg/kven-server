@@ -125,7 +125,7 @@ POST =  '<a class="post" href="/watch/post={0}">' \
                                     '<div class="post__commentaries__outer">' \
                                         '<div class="post__commentaries__inner">' \
                                             '<div class="post__commentaries__text">' \
-                                                '<span>1k</span>' \
+                                                '<span>{6}</span>' \
                                             '</div>' \
                                             '<icon><img src="/static/gallery/icons/commentaries.png" width="100%"></icon>' \
                                         '</div>' \
