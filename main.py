@@ -107,7 +107,7 @@ def news():
 
     all.append(posts)
 
-    return render_template("index.html").format(*all)
+    return render_template("news.html").format(*all)
 
 
 @app.route('/login', methods=['POST', "GET"])
