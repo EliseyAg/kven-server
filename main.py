@@ -72,11 +72,11 @@ def close_db(error):
 
 @app.route('/')
 def index():
-    return redirect("/news")
+    return redirect("/news/popular")
 
 
-@app.route('/news')
-def news():
+@app.route('/news/<string:mods>')
+def news(mods):
     all = []
     _posts = dbase.getAllPosts()
     posts = ""
