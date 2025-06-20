@@ -3,6 +3,16 @@ import sqlite3
 import time
 
 
+def getViewCount(x):
+    _views_list = list((str(x['views'])[1:-1]).split(', '))
+    if _views_list == ['']:
+        _views_count = 0
+    else:
+        _views_count = len(list(map(int, _views_list)))
+
+    return _views_count
+
+
 class FDataBase:
     def __init__(self, db):
         self.__db = db
@@ -280,8 +290,8 @@ class FDataBase:
             if mods == "new":
                 pass
 
-            if mods =="popular":
-                pass
+            if mods == "popular":
+                res.sort(key=lambda x: getViewCount(x))
 
             return res
         except sqlite3.Error as e:
