@@ -268,7 +268,7 @@ class FDataBase:
 
         return False
 
-    def getAllPosts(self):
+    def getAllPosts(self, mods):
         try:
             self.__cur.execute(f"SELECT * FROM posts")
             row = self.__cur.fetchone()
@@ -276,6 +276,12 @@ class FDataBase:
             while row is not None:
                 res.append(row)
                 row = self.__cur.fetchone()
+
+            if mods == "new":
+                pass
+
+            if mods =="popular":
+                pass
 
             return res
         except sqlite3.Error as e:

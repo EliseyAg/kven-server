@@ -78,7 +78,7 @@ def index():
 @app.route('/news/<string:mods>')
 def news(mods):
     all = []
-    _posts = dbase.getAllPosts()
+    _posts = dbase.getAllPosts(mods)
     posts = ""
 
     if _posts:
@@ -105,6 +105,7 @@ def news(mods):
 
             posts = POST.format(_post['id'], _user['username'], time.strftime('%d.%m.%Y', _post_time), time.strftime('%H:%M', _post_time), _post['text'], _views_count, _commentary_len) + posts
 
+
     all.append(posts)
 
     return render_template("news.html").format(*all)
@@ -116,7 +117,7 @@ def login():
         return redirect("/profile")
 
     if request.method == "POST":
-        user = dbase.getUserByName(request.form['username'])
+        user = dbase.getUserByName(request.form['username'])    
         if user and check_password_hash(user['psw'], request.form['password']):
             user_login = UserLogin().create(user)
             rm = True if request.form.get('remainme') else False
