@@ -50,3 +50,10 @@ CREATE TABLE IF NOT EXISTS posts (
     likes string NOT NULL,
     time integer NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS groups (
+    id integer PRIMARY KEY AUTOINCREMENT,
+    owner integer NOT NULL,
+    name text NOT NULL,
+    members string NOT NULL
+);
