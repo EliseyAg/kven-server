@@ -328,3 +328,14 @@ class FDataBase:
             print("Ошибка получения данных из БД " + str(e))
 
         return False
+
+    def addGroup(self, owner, name):
+        try:
+            self.__cur.execute("INSERT INTO commentary VALUES(NULL, ?, ?, ?, ?, ?, ?, ?)", (owner, name, "[" + owner + "]"))
+            self.__db.commit()
+
+            return True
+        except sqlite3.Error as e:
+            print("Ошибка добавления данных в БД " + str(e))
+
+        return False
