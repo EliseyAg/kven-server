@@ -331,11 +331,25 @@ class FDataBase:
 
     def addGroup(self, owner, name):
         try:
-            self.__cur.execute("INSERT INTO commentary VALUES(NULL, ?, ?, ?, ?, ?, ?, ?)", (owner, name, "[" + owner + "]"))
+            self.__cur.execute("INSERT INTO groups VALUES(NULL, ?, ?, ?, ?, ?, ?, ?)", (owner, name, "[" + owner + "]"))
             self.__db.commit()
 
             return True
         except sqlite3.Error as e:
             print("Ошибка добавления данных в БД " + str(e))
+
+        return False
+
+    def getGroupById(self, id):
+        try:
+            self.__cur.execute(f"SELECT * FROM groups WHERE id = '{id}'")
+            res = self.__cur.fetchone()
+            if not res:
+                print("Пост не найден")
+                return False
+
+            return res
+        except sqlite3.Error as e:
+            print("Ошибка получения данных из БД " + str(e))
 
         return False
