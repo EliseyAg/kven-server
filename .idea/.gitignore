@@ -3,4 +3,4 @@
 /workspace.xml
 
 # Main database
-/dbase.db
+*.db
