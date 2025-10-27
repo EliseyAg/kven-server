@@ -1,24 +1,23 @@
 from pika import ConnectionParameters, BlockingConnection
 
 
-connection_parameters = ConnectionParameters(
-    host="localhost",
-    port=5672,
-)
+class Producer:
+    def __init__(self, host, port):
+        self.connection_parameters = ConnectionParameters(
+            host=host,
+            port=port,
+        )
+
+        self.conn = BlockingConnection(self.connection_parameters)
+        self.ch = self.conn.channel()\
 
 
-def main():
-    with BlockingConnection(connection_parameters) as conn:
-        with conn.channel() as ch:
-            ch.queue_declare(queue="messages", durable=True)
+    def declare_queue(self, name, durable=True):
+        self.ch.queue_declare(queue=name, durable=durable)
 
-            ch.basic_publish(
-                exchange="",
-                routing_key="messages",
-                body="Hello RabbitMQ!",
-            )
-            print("Message sent")
-
-
-if __name__ == "__main__":
-    main()
+    def publish(self, routing_key, body, exchange=""):
+        self.ch.basic_publish(
+            exchange=exchange,
+            routing_key=routing_key,
+            body=body,
+        )
