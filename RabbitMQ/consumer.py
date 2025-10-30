@@ -14,7 +14,7 @@ class Consumer:
     def declare_queue(self, name, durable=True):
         self.ch.queue_declare(queue=name, durable=durable)
 
-    def publish(self, queue, callback):
+    def consume(self, queue, callback):
         self.ch.basic_consume(
             queue=queue,
             on_message_callback=callback,
