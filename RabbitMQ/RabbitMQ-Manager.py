@@ -1,11 +1,30 @@
 from producer import Producer
 from consumer import Consumer
 
+from pika import ConnectionParameters, BlockingConnection
+
 
 class RabbitMQManager:
-    def __init__(self, host, port):
-        self.producer = Producer(host, port)
-        self.consumer = Consumer(host, port)
+    connection_parameters = None
+    conn = None
+    ch = None
 
-    def declare_queue(self, name, durable=True):
-        self.ch.queue_declare(queue=name, durable=durable)
+    producer = None
+    consumer = None
+
+    @staticmethod
+    def __init__(host, port):
+        RabbitMQManager.connection_parameters = ConnectionParameters(
+            host=host,
+            port=port,
+        )
+
+        RabbitMQManager.conn = BlockingConnection(RabbitMQManager.connection_parameters)
+        RabbitMQManager.ch = RabbitMQManager.conn.channel()
+
+        RabbitMQManager.producer = Producer(RabbitMQManager.ch)
+        RabbitMQManager.consumer = Consumer(RabbitMQManager.ch)
+
+    @staticmethod
+    def declare_queue(name, durable=True):
+        RabbitMQManager.ch.queue_declare(queue=name, durable=durable)

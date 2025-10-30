@@ -1,15 +1,9 @@
-from pika import ConnectionParameters, BlockingConnection
+from pika import BlockingConnection
 
 
 class Producer:
-    def __init__(self, host, port):
-        self.connection_parameters = ConnectionParameters(
-            host=host,
-            port=port,
-        )
-
-        self.conn = BlockingConnection(self.connection_parameters)
-        self.ch = self.conn.channel()
+    def __init__(self, ch):
+        self.ch = ch
 
     def publish(self, routing_key, body, exchange=""):
         self.ch.basic_publish(
