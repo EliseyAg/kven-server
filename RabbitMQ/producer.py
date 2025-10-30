@@ -11,9 +11,6 @@ class Producer:
         self.conn = BlockingConnection(self.connection_parameters)
         self.ch = self.conn.channel()
 
-    def declare_queue(self, name, durable=True):
-        self.ch.queue_declare(queue=name, durable=durable)
-
     def publish(self, routing_key, body, exchange=""):
         self.ch.basic_publish(
             exchange=exchange,
