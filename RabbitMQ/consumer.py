@@ -1,31 +1,23 @@
 from pika import ConnectionParameters, BlockingConnection
 
 
-connection_parameters = ConnectionParameters(
-    host="localhost",
-    port=5672,
-)
+class Consumer:
+    def __init__(self, host, port):
+        self.connection_parameters = ConnectionParameters(
+            host=host,
+            port=port,
+        )
 
+        self.conn = BlockingConnection(self.connection_parameters)
+        self.ch = self.conn.channel()
 
-def process_message(ch, method, properties, body):
-    print(f"Получено сообщение: {body.decode()}")
+    def declare_queue(self, name, durable=True):
+        self.ch.queue_declare(queue=name, durable=durable)
 
-    ch.basic_ack(delivery_tag=method.delivery_tag)
+    def publish(self, queue, callback):
+        self.ch.basic_consume(
+            queue=queue,
+            on_message_callback=callback,
+        )
 
-
-def main():
-    with BlockingConnection(connection_parameters) as conn:
-        with conn.channel() as ch:
-            ch.queue_declare(queue="messages", durable=True)
-
-            ch.basic_consume(
-                queue="messages",
-                on_message_callback=process_message,
-            )
-
-            print("жду сообщений")
-            ch.start_consuming()
-
-
-if __name__ == "__main__":
-    main()
+        self.ch.start_consuming()
