@@ -14,10 +14,11 @@ class Consumer:
     def declare_queue(self, name, durable=True):
         self.ch.queue_declare(queue=name, durable=durable)
 
-    def consume(self, queue, callback):
+    def add_consume(self, queue, callback):
         self.ch.basic_consume(
             queue=queue,
             on_message_callback=callback,
         )
 
+    def start_consuming(self):
         self.ch.start_consuming()
