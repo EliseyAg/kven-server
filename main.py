@@ -148,7 +148,7 @@ def register():
     return render_template("register.html")
 
 
-@app.route('/messenger')
+'''@app.route('/messenger')
 @login_required
 def messenger():
     chat_refs = ""
@@ -167,7 +167,7 @@ def messenger():
                 _opponent_user_name = str(dbase.getUserById(_opponent_id)['username'])
                 chat_refs += CHAT_REF.format(_chat['id'], _opponent_user_name)
 
-    return render_template("messenger.html").format(chat_refs)
+    return render_template("messenger.html").format(chat_refs)'''
 
 
 @app.route('/personlist', methods=['POST', "GET"])

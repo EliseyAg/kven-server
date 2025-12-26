@@ -1,5 +1,5 @@
-from producer import Producer
-from consumer import Consumer
+from RabbitMQ.producer import Producer
+from RabbitMQ.consumer import Consumer
 
 from pika import ConnectionParameters, BlockingConnection
 
