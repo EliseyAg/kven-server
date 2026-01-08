@@ -1,10 +1,12 @@
-from flask import Flask, render_template, request, g, flash, abort, redirect, url_for
+from flask import Flask, render_template, request, g, flash, abort, redirect, url_for, session
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 import sqlite3
 import os
 import time
+import threading
 
+from RabbitMQ.RabbitMQ_Manager import RabbitMQManager
 from FDataBase import FDataBase
 from UserLogin import UserLogin
 from Chat import Chat
@@ -122,6 +124,9 @@ def login():
             user_login = UserLogin().create(user)
             rm = True if request.form.get('remainme') else False
             login_user(user_login, remember=rm)
+
+            session['user_id'] = user_login.get_id()
+
             return redirect("/profile")
 
     return render_template("login.html")
@@ -139,6 +144,9 @@ def register():
                 user_login = UserLogin().create(user)
                 rm = True if request.form.get('remainme') else False
                 login_user(user_login, remember=rm)
+
+                session['user_id'] = user_login.get_id()
+
                 return redirect("/profile")
             else:
                 flash("Ошибка при добавлении в БД", "error")
@@ -456,5 +464,23 @@ def user(username):
     return render_template("profile.html").format(*all)
 
 
+def user_id_request(ch, method, properties, body):
+    print(body)
+    ch.basic_ack(delivery_tag=method.delivery_tag)
+
+
 if __name__ == "__main__":
+    threads = []
+
+    RabbitMQManager.__init__("localhost", 5672)
+    RabbitMQManager.declare_queue("user_ids_requests")
+    RabbitMQManager.declare_queue("user_ids")
+
+    RabbitMQManager.add_consume(queue="user_ids_requests", callback=user_id_request)
+
+    threads.append(threading.Thread(target=RabbitMQManager.start_consuming))
+
+    for thread in threads:
+        thread.start()
+
     app.run(host="0.0.0.0", port=5000)
