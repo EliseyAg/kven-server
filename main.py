@@ -16,13 +16,15 @@ from HTML_templates import *
 
 DATABASE = '/tmp/dbase.bd'
 DEBUG = True
-SECRET_KEY = 'jgfjlfkj765@68976,<34'
+SECRET_KEY = 'SECRET'
 
 
 app = Flask(__name__)
 app.config.from_object(__name__)
 app.config.update(dict(DATABASE=os.path.join(app.root_path, 'dbase.db')))
 #app.config['SERVER_NAME'] = "0.0.0.0"
+#app.permanent_session_lifetime =
+app.config.update(SECRET_KEY=SECRET_KEY)
 
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
@@ -125,7 +127,9 @@ def login():
             rm = True if request.form.get('remainme') else False
             login_user(user_login, remember=rm)
 
+            session.permanent = True
             session['user_id'] = user_login.get_id()
+            session.modified = True
 
             return redirect("/profile")
 
