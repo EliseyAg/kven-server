@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, g, flash, abort, redirect, url_for
+from flask import Flask, render_template, request, g, flash, abort, redirect, url_for, make_response
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 import sqlite3
@@ -129,7 +129,9 @@ def login():
 
             return redirect("/profile")
 
-    return render_template("login.html")
+    response = make_response(render_template("login.html"))
+
+    return response
 
 
 @app.route('/register', methods=['POST', "GET"])
