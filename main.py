@@ -127,11 +127,22 @@ def login():
             rm = True if request.form.get('remainme') else False
             login_user(user_login, remember=rm)
 
-            return redirect("/profile")
+            response = make_response(redirect("/profile"))
+            response.set_cookie('user_id', user_login.get_id(), max_age=60 * 60 * 24 * 30)
 
-    response = make_response(render_template("login.html"))
+            return response
 
-    return response
+    return render_template("login.html")
+
+
+@app.route('/get')
+def get_cookie():
+    # Получаем значение куки 'user'
+    _user_id = request.cookies.get('user_id')
+    if _user_id:
+        return f"Привет, {_user_id}!"
+    else:
+        return "Кука 'user_id' не найдена."
 
 
 @app.route('/register', methods=['POST', "GET"])
