@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, g, flash, abort, redirect, url_for, session
+from flask import Flask, render_template, request, g, flash, abort, redirect, url_for
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 import sqlite3
@@ -127,10 +127,6 @@ def login():
             rm = True if request.form.get('remainme') else False
             login_user(user_login, remember=rm)
 
-            session.permanent = True
-            session['user_id'] = user_login.get_id()
-            session.modified = True
-
             return redirect("/profile")
 
     return render_template("login.html")
@@ -148,8 +144,6 @@ def register():
                 user_login = UserLogin().create(user)
                 rm = True if request.form.get('remainme') else False
                 login_user(user_login, remember=rm)
-
-                session['user_id'] = user_login.get_id()
 
                 return redirect("/profile")
             else:
@@ -337,7 +331,7 @@ def post(id):
             dbase.addViewToPost(id, int(current_user.get_id()))
 
             _views_list = list((str(_post['views'])[1:-1]).split(', '))
-            if _views_list == ['']:
+            if _views_list == ['']: 
                 _views_count = 0
             else:
                 _views_count = len(list(map(int, _views_list)))
